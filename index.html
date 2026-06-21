@@ -152,7 +152,7 @@
             color: #c4b5fd;
         }
 
-        /* ===== VIDEO EMBED (Click to play) ===== */
+        /* ===== VIDEO EMBED ===== */
         .video-wrapper {
             position: relative;
             padding-bottom: 56.25%; /* 16:9 */
@@ -170,6 +170,20 @@
             width: 100%;
             height: 100%;
             border: none;
+        }
+        .video-fallback-btn {
+            display: inline-block;
+            background: #f472b6;
+            color: #0a0a0f;
+            padding: 10px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s;
+            margin-top: 8px;
+        }
+        .video-fallback-btn:hover {
+            background: #f9a8d4;
         }
 
         /* ============================================================ */
@@ -568,7 +582,7 @@
                 </p>
             </div>
 
-            <!-- VIDEO 1 (Working) -->
+            <!-- VIDEO 1 (Confirmed Working) -->
             <div class="video-wrapper">
                 <iframe src="https://www.youtube.com/embed/dYtSU7x-23M" title="Aerosol Jet Printing Process" allowfullscreen></iframe>
             </div>
@@ -629,7 +643,7 @@
                 </div>
             </div>
 
-            <!-- VIDEO 2 (Working) -->
+            <!-- VIDEO 2 (Confirmed Working) -->
             <div class="video-wrapper">
                 <iframe src="https://www.youtube.com/embed/4Sz4MrE_D70" title="Inside Polymer Nanocomposite Production" allowfullscreen></iframe>
             </div>
@@ -638,7 +652,7 @@
     </section>
 
     <!-- ============================================================
-    SECTION 4: PAPER 3 (3D NANOPRINTING) - FIXED VIDEO
+    SECTION 4: PAPER 3 (3D NANOPRINTING) - FIXED WITH FALLBACK
     ============================================================ -->
     <section>
         <div class="container">
@@ -703,11 +717,14 @@
                 </div>
             </div>
 
-            <!-- VIDEO 3 (FIXED - Working Official Optomec Video) -->
+            <!-- VIDEO 3 (New Video + Fallback Link) -->
             <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/Zk3GvT-3tH0" title="Aerosol Jet 3D Printed Electronics System" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/5hTtzxKZhsY" title="3D Printing with Aerosol Jet" allowfullscreen></iframe>
             </div>
-            <p style="text-align:center; font-size:0.8rem; color:#64748b;">📺 Video: Aerosol Jet Technology for 3D Printed Electronics (Optomec Official)</p>
+            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <a href="https://www.youtube.com/watch?v=5hTtzxKZhsY" target="_blank" class="video-fallback-btn">▶ Watch on YouTube (if blocked)</a>
+            </div>
+            <p style="text-align:center; font-size:0.8rem; color:#64748b; margin-top:8px;">📺 Video: 3D Printing with Aerosol Jet (University Educational Video)</p>
         </div>
     </section>
 
