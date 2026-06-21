@@ -1,508 +1,872 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Aerosol Jet Nanomanufacturing: Principles, Nanoscale Focusing, and Multi-Material Integration</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AJP · 3 Paper Deep Dive & GAP</title>
     <style>
-        :root {
-            --bg-primary: #0d1117;
-            --bg-secondary: #161b22;
-            --accent: #58a6ff;
-            --accent-success: #238636;
-            --text-main: #c9d1d9;
-            --text-muted: #8b949e;
-            --border-color: #30363d;
-            --script-bg: #1f242c;
-        }
-
+        /* ===== RESET & LAYOUT ===== */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-main);
-            display: flex;
-            min-height: 100vh;
-            line-height: 1.6;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0a0a0f;
+            color: #e8e8f0;
+            line-height: 1.7;
+            scroll-behavior: smooth;
         }
-
-        /* Interactive Sidebar Navigation */
-        aside {
-            width: 320px;
-            background-color: var(--bg-secondary);
-            border-right: 1px solid var(--border-color);
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            padding: 2rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            z-index: 100;
-        }
-
-        .dashboard-header h1 {
-            font-size: 1.25rem;
-            color: #ffffff;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            letter-spacing: -0.5px;
-        }
-
-        .dashboard-header p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .timer-box {
-            background-color: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 1rem;
-            text-align: center;
-            margin: 1.5rem 0;
-        }
-
-        .timer-display {
-            font-family: "Courier New", Courier, monospace;
-            font-size: 2.2rem;
-            font-weight: bold;
-            color: var(--accent);
-        }
-
-        .timer-controls button {
-            background: transparent;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            padding: 0.25rem 0.75rem;
-            font-size: 0.8rem;
-            border-radius: 4px;
-            cursor: pointer;
-            margin: 0.5rem 0.25rem 0;
-            transition: all 0.2s ease;
-        }
-
-        .timer-controls button:hover {
-            background: var(--accent);
-            color: var(--bg-primary);
-        }
-
-        nav ul {
-            list-style: none;
-            margin-top: 1rem;
-        }
-
-        nav li {
-            margin-bottom: 0.75rem;
-        }
-
-        nav a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            display: block;
-            padding: 0.4rem 0.75rem;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }
-
-        nav a:hover, nav a.active {
-            color: #ffffff;
-            background-color: var(--border-color);
-            border-left: 3px solid var(--accent);
-        }
-
-        .footer-meta {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border-color);
-            padding-top: 1rem;
-        }
-
-        /* Main Content Layout */
-        main {
-            margin-left: 320px;
-            flex: 1;
-            padding: 3rem 4rem;
-            max-width: 1100px;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
         }
 
         section {
-            margin-bottom: 5rem;
-            scroll-margin-top: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+            overflow: hidden;
         }
 
+        /* ===== TYPOGRAPHY ===== */
+        h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
         h2 {
-            font-size: 1.8rem;
-            color: #ffffff;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 24px;
         }
-
         h3 {
-            font-size: 1.2rem;
-            color: var(--accent);
-            margin: 1.5rem 0 0.5rem;
-        }
-
-        p {
-            margin-bottom: 1.25rem;
-            text-align: justify;
-        }
-
-        /* Interactive Presenter Script Panel */
-        .script-toggle-btn {
-            background-color: var(--border-color);
-            color: #ffffff;
-            border: none;
-            padding: 0.6rem 1.2rem;
-            font-size: 0.85rem;
+            font-size: 1.6rem;
             font-weight: 600;
-            border-radius: 4px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-            transition: background-color 0.2s;
+            margin-bottom: 12px;
+            color: #60a5fa;
         }
-
-        .script-toggle-btn:hover {
-            background-color: #444c56;
+        h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #e8e8f0;
+            margin-bottom: 8px;
         }
-
-        .script-panel {
-            display: none;
-            background-color: var(--script-bg);
-            border-left: 4px solid var(--accent-success);
-            border-radius: 0 6px 6px 0;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            font-size: 0.95rem;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        .script-speaker {
-            font-weight: bold;
-            color: var(--accent);
-            text-transform: uppercase;
+        .badge {
+            display: inline-block;
+            background: rgba(96, 165, 250, 0.15);
+            color: #60a5fa;
+            padding: 4px 16px;
+            border-radius: 20px;
             font-size: 0.8rem;
-            letter-spacing: 1px;
-            margin-top: 0.75rem;
-            display: block;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+            border: 1px solid rgba(96, 165, 250, 0.2);
+        }
+        .text-muted {
+            color: #94a3b8;
+        }
+        .text-highlight {
+            color: #fbbf24;
+            font-weight: 500;
         }
 
-        .script-speaker + p {
-            margin-bottom: 0.5rem;
-            color: #e6edf3;
+        /* ===== CARDS ===== */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 24px 0;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin: 24px 0;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+        }
+        .card .tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #a78bfa;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        /* Engineering Matrix Table */
-        table {
+        /* ===== TABLE ===== */
+        .comparison-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 2rem 0;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            margin: 20px 0;
         }
-
-        th, td {
-            border: 1px solid var(--border-color);
-            padding: 0.75rem 1rem;
+        .comparison-table th,
+        .comparison-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             text-align: left;
         }
-
-        th {
-            background-color: var(--bg-secondary);
-            color: #ffffff;
+        .comparison-table th {
+            background: rgba(255, 255, 255, 0.04);
+            font-weight: 600;
+            color: #94a3b8;
+        }
+        .highlight-cell {
+            color: #60a5fa;
+            font-weight: 600;
         }
 
-        tr:nth-child(even) {
-            background-color: rgba(255,255,255,0.02);
+        /* ===== RESEARCH QUESTION BOX ===== */
+        .question-box {
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.1), rgba(167, 139, 250, 0.1));
+            border: 2px solid rgba(96, 165, 250, 0.25);
+            border-radius: 16px;
+            padding: 32px 36px;
+            margin: 24px 0;
+        }
+        .question-box .big-q {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #c4b5fd;
         }
 
-        .equation-block {
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 1rem;
-            font-family: "Times New Roman", Times, serif;
-            font-style: italic;
-            font-size: 1.1rem;
-            text-align: center;
-            margin: 1.5rem 0;
-            color: #ffffff;
+        /* ===== VIDEO EMBED (Click to play) ===== */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            margin: 20px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
-        .badge {
-            background-color: rgba(88, 166, 255, 0.1);
-            color: var(--accent);
-            padding: 0.2rem 0.5rem;
+        /* ============================================================ */
+        /*                CUSTOM ANIMATIONS (Pure CSS)                   */
+        /* ============================================================ */
+
+        /* 1. AJP Process Flow */
+        .ajp-animation {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 30px 20px;
+            margin: 20px 0;
+            position: relative;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .ajp-stage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #94a3b8;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            position: relative;
+            z-index: 2;
+        }
+        .ajp-stage .icon {
+            font-size: 2rem;
+            margin-bottom: 4px;
+        }
+        .ajp-tube {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            position: relative;
+            margin: 0 10px;
             border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 0.5rem;
+            overflow: hidden;
+        }
+        .particle-flow {
+            position: absolute;
+            top: 0;
+            left: -30px;
+            width: 10px;
+            height: 6px;
+            background: #60a5fa;
+            border-radius: 4px;
+            animation: flowParticle 2.5s linear infinite;
+            box-shadow: 0 0 15px rgba(96, 165, 250, 0.6);
+        }
+        .particle-flow:nth-child(2) {
+            animation-delay: 0.8s;
+            background: #a78bfa;
+            width: 8px;
+        }
+        .particle-flow:nth-child(3) {
+            animation-delay: 1.6s;
+            background: #f472b6;
+            width: 12px;
+        }
+        @keyframes flowParticle {
+            0% {
+                left: -20px;
+                opacity: 1;
+            }
+            100% {
+                left: calc(100% + 20px);
+                opacity: 0.2;
+            }
+        }
+
+        /* 2. Dispersion (Good vs Bad) */
+        .dispersion-container {
+            display: flex;
+            gap: 30px;
+            margin: 20px 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .dispersion-box {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .dispersion-box h4 {
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            color: #94a3b8;
+        }
+        .dispersion-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+            margin: 0 auto;
+            max-width: 200px;
+        }
+        .dot {
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            background: #60a5fa;
+            opacity: 0.8;
+            animation: pulseDot 2s infinite alternate;
+        }
+        .dot.agglomerate {
+            background: #f472b6;
+            animation: none;
+            transform: scale(1.8);
+            box-shadow: 0 0 20px rgba(244, 114, 182, 0.5);
+        }
+        .dot.empty {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        @keyframes pulseDot {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.4;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        /* 3. Electric Field Focusing */
+        .efield-container {
+            background: #0f0f1a;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            position: relative;
+            overflow: hidden;
+        }
+        .efield-mask {
+            position: absolute;
+            top: 10px;
+            width: 60%;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            border: 1px solid #fbbf24;
+        }
+        .efield-mask .hole {
+            width: 30px;
+            height: 30px;
+            background: #0f0f1a;
+            border-radius: 50%;
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 2px solid #fbbf24;
+        }
+        .efield-pillar {
+            width: 20px;
+            height: 60px;
+            background: linear-gradient(to top, #60a5fa, #a78bfa);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 20px;
+            animation: growPillar 3s ease-in-out infinite alternate;
+        }
+        .efield-particles {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .efield-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #f472b6;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #f472b6;
+            animation: fallToPillar 2s ease-in infinite;
+        }
+        .efield-particle:nth-child(1) {
+            left: 30%;
+            animation-delay: 0.2s;
+        }
+        .efield-particle:nth-child(2) {
+            left: 70%;
+            animation-delay: 0.9s;
+        }
+        .efield-particle:nth-child(3) {
+            left: 50%;
+            animation-delay: 1.5s;
+        }
+        .efield-particle:nth-child(4) {
+            left: 20%;
+            animation-delay: 0.5s;
+            background: #60a5fa;
+        }
+        .efield-particle:nth-child(5) {
+            left: 80%;
+            animation-delay: 1.2s;
+            background: #60a5fa;
+        }
+        @keyframes fallToPillar {
+            0% {
+                top: 0px;
+                opacity: 0;
+                transform: translateX(-50%) scale(0.5);
+            }
+            30% {
+                opacity: 1;
+            }
+            100% {
+                top: 140px;
+                opacity: 0.8;
+                transform: translateX(-50%) scale(1);
+            }
+        }
+        @keyframes growPillar {
+            0% {
+                height: 20px;
+            }
+            100% {
+                height: 80px;
+            }
+        }
+
+        /* ===== HELPERS ===== */
+        details {
+            cursor: pointer;
+            margin: 10px 0;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        details summary {
+            font-weight: 600;
+            color: #60a5fa;
+        }
+        details p {
+            margin-top: 12px;
+            color: #cbd5e1;
+        }
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #60a5fa, #f472b6);
+            z-index: 999;
+            transition: width 0.1s;
+            width: 0%;
+        }
+        .scroll-hint {
+            margin-top: 30px;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.85rem;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(8px);
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.6rem;
+            }
+            h2 {
+                font-size: 2rem;
+            }
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            section {
+                min-height: auto;
+                padding: 40px 0;
+            }
+            .ajp-animation {
+                flex-wrap: wrap;
+                height: auto;
+                gap: 10px;
+            }
+            .ajp-tube {
+                width: 100%;
+                height: 30px;
+            }
+            .particle-flow {
+                height: 30px;
+            }
+            .dispersion-container {
+                flex-direction: column;
+            }
+            .question-box .big-q {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <aside>
-        <div class="top-nav-group">
-            <div class="dashboard-header">
-                <h1>Aerosol Jet Manufacturing</h1>
-                <p>Master's Presentation Dashboard</p>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- ============================================================
+    SECTION 1: TITLE
+    ============================================================ -->
+    <section>
+        <div class="container">
+            <div style="max-width: 800px;">
+                <div style="color: #60a5fa; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 12px;">AEROSOL JET PRINTING · 3 PAPERS</div>
+                <h1>From Micro to Nano<br><span class="gradient-text">The Evolution of Aerosol Manufacturing</span></h1>
+                <p style="font-size: 1.3rem; color: #94a3b8; margin-top: 20px; max-width: 650px;">
+                    Wilkinson (2019) · Hwang (2024) · Jung (2019)<br>
+                    Review · Multi-material Composites · 3D Nanoprinting
+                </p>
+                <div style="display: flex; gap: 16px; margin-top: 28px; flex-wrap: wrap;">
+                    <span style="background: rgba(96,165,250,0.15); padding: 6px 18px; border-radius: 20px; font-size:0.85rem; border:1px solid rgba(96,165,250,0.2);">Paper 1 · Review</span>
+                    <span style="background: rgba(167,139,250,0.15); padding: 6px 18px; border-radius: 20px; font-size:0.85rem; border:1px solid rgba(167,139,250,0.2);">Paper 2 · Nanocomposites</span>
+                    <span style="background: rgba(244,114,182,0.15); padding: 6px 18px; border-radius: 20px; font-size:0.85rem; border:1px solid rgba(244,114,182,0.2);">Paper 3 · 3D Nanoprinting</span>
+                </div>
+                <div class="scroll-hint">↓ Scroll to explore the deep dive</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    SECTION 2: PAPER 1 (REVIEW)
+    ============================================================ -->
+    <section>
+        <div class="container">
+            <span class="badge">Paper 1 · Review</span>
+            <h2>AJP Technology: The Foundation</h2>
+            <p style="font-size:1.1rem; color:#c4c4d0;"><strong>Wilkinson et al. (2019)</strong> · <em>Int J Adv Manuf Technol</em></p>
+
+            <details>
+                <summary>📄 Read the Abstract</summary>
+                <p><em>"Aerosol Jet Printing (AJP) is an emerging contactless direct write approach... Freeform deposition, coupled with a relatively large stand-off distance, enables increased geometric complexity. Wide material compatibility, high resolution and independence of orientation provide novelty... This overview summarises the principles, reviews applications and discusses hurdles to industry adoption."</em></p>
+            </details>
+
+            <!-- AJP Process Animation -->
+            <div class="ajp-animation">
+                <div class="ajp-stage"><span class="icon">💧</span><span>Atomizer</span></div>
+                <div class="ajp-tube"><div class="particle-flow"></div><div class="particle-flow"></div><div class="particle-flow"></div></div>
+                <div class="ajp-stage"><span class="icon">🎯</span><span>Focusing</span></div>
+                <div class="ajp-tube"><div class="particle-flow" style="animation-duration:2s;"></div><div class="particle-flow" style="animation-duration:2.5s; animation-delay:0.6s;"></div></div>
+                <div class="ajp-stage"><span class="icon">⬇️</span><span>Nozzle</span></div>
+                <div class="ajp-tube" style="flex:0.5;"><div class="particle-flow" style="animation-duration:1.5s; background:#fbbf24;"></div></div>
+                <div class="ajp-stage"><span class="icon">🧪</span><span>Substrate</span></div>
             </div>
 
-            <div class="timer-box">
-                <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.25rem; text-transform:uppercase;">Remaining Time</p>
-                <div class="timer-display" id="countdown">10:00</div>
-                <div class="timer-controls">
-                    <button id="startBtn">Start</button>
-                    <button id="pauseBtn">Pause</button>
-                    <button id="resetBtn">Reset</button>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="tag">⚙️ How It Works</div>
+                    <h4>Atomization & Deposition</h4>
+                    <p style="color:#94a3b8; font-size:0.9rem;">Inks are turned into a mist (aerosol) using either <strong>ultrasonic waves</strong> (for low-viscosity inks) or <strong>pneumatic gas</strong> (for high-viscosity inks). The mist is then focused by a sheath gas and deposited with a <span class="text-highlight">1-5 mm stand-off</span>, allowing printing on curved surfaces.</p>
+                </div>
+                <div class="card">
+                    <div class="tag">📦 Materials</div>
+                    <h4>From Silver to DNA</h4>
+                    <p style="color:#94a3b8; font-size:0.9rem;">The key strength is versatility. Researchers have printed <span class="text-highlight">silver nanoparticles</span> for electronics, <span class="text-highlight">ceramics</span> for capacitors, and even <span class="text-highlight">proteins and DNA</span> for biosensors—all using the same machine.</p>
+                </div>
+                <div class="card">
+                    <div class="tag">⚠️ The Bottleneck</div>
+                    <h4>Overspray & Ink Challenges</h4>
+                    <p style="color:#94a3b8; font-size:0.9rem;">Two main issues remain: <span class="text-highlight">Overspray</span> (tiny satellite droplets that ruin line edges) and <span class="text-highlight">complex ink formulation</span>. Unlike inkjet printing, there is no universal formula to predict if an ink will work.</p>
                 </div>
             </div>
 
-            <nav>
-                <ul>
-                    <li><a href="#intro" class="nav-link active">1. Strategic Overview</a></li>
-                    <li><a href="#foundations" class="nav-link">2. Classical Physics of AJP</a></li>
-                    <li><a href="#focusing" class="nav-link">3. Electrostatic Nano-Focusing</a></li>
-                    <li><a href="#multimaterial" class="nav-link">4. Multi-Material Processing</a></li>
-                    <li><a href="#matrix" class="nav-link">5. Engineering Parameter Matrix</a></li>
-                </ul>
-            </nav>
+            <!-- Key Result -->
+            <div style="background:rgba(255,255,255,0.02); padding:16px 24px; border-radius:12px; border-left:3px solid #60a5fa; margin-top:10px;">
+                <p style="color:#cbd5e1; font-size:0.95rem;">
+                    📊 <strong>What they achieved:</strong> The review shows that AJP can produce <span class="text-highlight">~10 µm</span> fine features. However, it also highlights a major gap: the process is highly empirical, and achieving consistent quality requires extensive trial-and-error.
+                </p>
+            </div>
+
+            <!-- ==== EMBEDDED VIDEO 1 (Your link) ==== -->
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/dYtSU7x-23M" title="Aerosol Jet Printing Process" allowfullscreen></iframe>
+            </div>
+            <p style="text-align:center; font-size:0.8rem; color:#64748b;">📺 Video: AJP Process Overview</p>
         </div>
+    </section>
 
-        <div class="footer-meta">
-            <p><strong>Group Members:</strong> Partner 1 & Partner 2</p>
-            <p>Aerosol & Nanotechnology Course</p>
+    <!-- ============================================================
+    SECTION 3: PAPER 2 (AM3D NANOCOMPOSITES)
+    ============================================================ -->
+    <section>
+        <div class="container">
+            <span class="badge" style="color:#a78bfa; border-color:rgba(167,139,250,0.3); background:rgba(167,139,250,0.1);">Paper 2 · Innovation</span>
+            <h2>Solving the 60-Year Dispersion Problem</h2>
+            <p style="font-size:1.1rem; color:#c4c4d0;"><strong>Hwang et al. (2024)</strong> · <em>Nano Energy</em></p>
+
+            <details>
+                <summary>📄 Read the Abstract</summary>
+                <p><em>"Polymer-based nanocomposites emerged in the 1960s... however, achieving uniform nanomaterial dispersion has impeded progress. Here, we present a polymer-based nanocomposite with highly dispersed nanomaterials, achieved through aerosol-jet-based multi-material three-dimensional (AM3D) printing. Numerical simulations facilitate the avoidance of interfacial compatibility issues... As a result, the 3D structured nanocomposite exhibits a uniform dielectric constant and low dielectric loss."</em></p>
+            </details>
+
+            <!-- Dispersion Comparison Animation -->
+            <div class="dispersion-container">
+                <div class="dispersion-box">
+                    <h4>❌ Traditional Pre-Mixing</h4>
+                    <div class="dispersion-grid">
+                        <div class="dot agglomerate"></div><div class="dot empty"></div><div class="dot agglomerate"></div><div class="dot empty"></div><div class="dot"></div>
+                        <div class="dot empty"></div><div class="dot agglomerate"></div><div class="dot empty"></div><div class="dot agglomerate"></div><div class="dot empty"></div>
+                        <div class="dot agglomerate"></div><div class="dot empty"></div><div class="dot"></div><div class="dot empty"></div><div class="dot agglomerate"></div>
+                        <div class="dot empty"></div><div class="dot"></div><div class="dot agglomerate"></div><div class="dot empty"></div><div class="dot"></div>
+                        <div class="dot"></div><div class="dot agglomerate"></div><div class="dot empty"></div><div class="dot agglomerate"></div><div class="dot empty"></div>
+                    </div>
+                    <p style="color:#94a3b8; font-size:0.8rem; margin-top:10px;">Nanoparticles clump together (agglomerate), leading to weak spots and electrical leaks.</p>
+                </div>
+                <div class="dispersion-box" style="border-color:rgba(96,165,250,0.3);">
+                    <h4>✅ AM3D (Separate Atomization)</h4>
+                    <div class="dispersion-grid">
+                        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                    </div>
+                    <p style="color:#94a3b8; font-size:0.8rem; margin-top:10px;">Perfectly dispersed nanoparticles. Uniform properties across the entire film.</p>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="tag">💡 The "Graffiti" Trick</div>
+                    <h4>Don't Pre-Mix!</h4>
+                    <p style="color:#94a3b8; font-size:0.9rem;">Inspired by graffiti art, the researchers <strong>atomize the polymer and the nanoparticles separately</strong>. They only combine in the printhead at the very last moment. This completely prevents the agglomeration that happens when you mix them in a jar.</p>
+                </div>
+                <div class="card">
+                    <div class="tag">🔬 The Result</div>
+                    <h4>16× Better Performance</h4>
+                    <p style="color:#94a3b8; font-size:0.9rem;">By eliminating agglomeration, the material's <span class="text-highlight">dielectric constant increased dramatically</span> (up to 16 times higher in multi-layer structures). The electrical properties were uniform, and the material performed excellently in energy-harvesting devices.</p>
+                </div>
+            </div>
+
+            <!-- ==== EMBEDDED VIDEO 2 (Nanoparticle Dispersion) ==== -->
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/rr5ALZGxEI8" title="Nanoparticle Dispersion Animation" allowfullscreen></iframe>
+            </div>
+            <p style="text-align:center; font-size:0.8rem; color:#64748b;">📺 Video: Nanoparticle Dispersion in Polymers</p>
         </div>
-    </aside>
+    </section>
 
-    <main>
-        
-        <section id="intro">
-            <span class="badge">0:00 - 1:30</span>
-            <h2>1. Strategic Overview & Narrative Concept</h2>
-            <p>
-                Additive manufacturing at the micro- and nanoscale bridges the historical gap between top-down lithographic processing and flexible, rapid bottom-up production. Traditional extrusion and inkjet methodologies scale poorly into sub-micron spaces due to inherent fluid dynamic limitations, such as clogging and high surface tension effects at tiny nozzle interfaces. Aerosol Jet Printing (AJP) eliminates these bottlenecks by transitioning materials from bulk liquid structures into fine gas-borne droplet configurations.
-            </p>
-            <p>
-                This collaborative study evaluates the engineering maturity curve of aerosol-assisted writing. We establish a complete roadmap: beginning with the foundational fluid and thermodynamic bounds governing transport gas mechanisms, moving into novel electrodynamic focusing mechanics that overcome physical aero-inertial limits to achieve true 3D nanostructures, and concluding with a multi-material approach designed to engineer advanced, non-agglomerating matrix devices for functional energy systems.
-            </p>
+    <!-- ============================================================
+    SECTION 4: PAPER 3 (3D NANOPRINTING)
+    ============================================================ -->
+    <section>
+        <div class="container">
+            <span class="badge" style="color:#f472b6; border-color:rgba(244,114,182,0.3); background:rgba(244,114,182,0.1);">Paper 3 · Breakthrough</span>
+            <h2>Electric Field Guided 3D Nanoprinting</h2>
+            <p style="font-size:1.1rem; color:#c4c4d0;"><strong>Jung et al. (2019)</strong> · <em>Science (submitted/preprint style)</em></p>
 
-            <button class="script-toggle-btn" onclick="toggleScript('script-intro')">💬 Toggle Presenter Script</button>
-            <div class="script-panel" id="script-intro">
-                <span class="script-speaker">Presenter 1:</span>
-                <p>"Good morning, Professor. Today, my partner and I are ditching classic slide formats to present through a dynamic engineering dashboard. Our goal is to detail how aerosol physics transitions from microscale electronics printing to sub-micron 3D manufacturing. I will establish the foundational system architectures and the aero-inertial limits that govern conventional printing."</p>
-                <span class="script-speaker">Presenter 2:</span>
-                <p>"And I will then guide us through the recent breakthroughs in electrostatic charge focusing that allow us to bypass classical gas drag constraints, showing how we translate these mechanisms into multi-material polymer-matrix composites without triggering particle agglomeration. Let's start with the base physics."</p>
+            <details>
+                <summary>📄 Read the Abstract</summary>
+                <p><em>"We propose a novel 3D nano-printing concept... We apply a floating dielectric mask to focus charged aerosols through a convergent electrostatic field... Interestingly, we found two different regimes (3D growth mode and 3D writing mode) exist depending on the translation velocity of the stage."</em></p>
+            </details>
+
+            <!-- Electric Field Animation -->
+            <div class="efield-container">
+                <div class="efield-mask"><div class="hole"></div></div>
+                <div class="efield-particles">
+                    <div class="efield-particle"></div><div class="efield-particle"></div>
+                    <div class="efield-particle"></div><div class="efield-particle"></div>
+                    <div class="efield-particle"></div>
+                </div>
+                <div class="efield-pillar"></div>
+                <p style="position:absolute; bottom:8px; right:16px; color:#64748b; font-size:0.7rem; z-index:5;">Animation: Particles focus through the mask hole onto the growing tip.</p>
             </div>
-        </section>
 
-        <section id="foundations">
-            <span class="badge">1:30 - 4:15</span>
-            <h2>2. Classical Physics & Transport Phenomena of AJP</h2>
-            <p>
-                According to the comprehensive mechanics laid out by Wilkinson et al., a standard Aerosol Jet Printing loop runs on two sequential steps: atomization and aerodynamic collimation. The bulk liquid ink, containing highly active particles, undergoes high-frequency ultrasonic energy atomization (typically operating in the 1–2.5 MHz regime) or pneumatic shear-force atomization. This produces a dense aerosol stream consisting of micro-droplets with an average diameter range of 1 to 5 micrometers.
-            </p>
-            <div class="equation-block">
-                Stk = (ρ_p · d_p^2 · C_c · U_0) / (18 · μ · D_b)
+            <div class="grid-2">
+                <div class="card">
+                    <div class="tag">⚡ The "Electric Funnel"</div>
+                    <h4>Electrostatic Focusing</h4>
+                    <p style="color:#94a3b8; font-size:0.9rem;">Instead of a physical nozzle, they use <span class="text-highlight">electric fields</span>. Ions accumulate on a mask, creating a funnel that guides charged nanoparticles with extreme precision. This removes the physical constraints of a nozzle.</p>
+                </div>
+                <div class="card">
+                    <div class="tag">🌀 Two Modes of Printing</div>
+                    <h4>Grow or Write</h4>
+                    <p style="color:#94a3b8; font-size:0.9rem;"><strong>Growth Mode:</strong> Move the stage slowly, and particles build tall 3D pillars or spirals. <strong>Writing Mode:</strong> Move fast, and the particles "brush" across the substrate, allowing you to draw letters or patterns.</p>
+                </div>
             </div>
-            <p>
-                Transport dynamics depend heavily on the **Stokes number ($Stk$)**, which dictates whether an extracted particle track tracks gas streamlines or deviates due to inertial forces during boundary layer acceleration. The aerosol enters the deposition head assembly, where a secondary coaxial gas stream, known as the **sheath gas**, tightly wraps around the main path. This creates a focused, narrow stream, drastically reducing the beam's width and letting it cross a large distance without hitting or clogging the nozzle surface.
-            </p>
 
-            <button class="script-toggle-btn" onclick="toggleScript('script-foundations')">💬 Toggle Presenter Script</button>
-            <div class="script-panel" id="script-foundations">
-                <span class="script-speaker">Presenter 1:</span>
-                <p>"As documented by Wilkinson and co-workers, the heart of traditional AJP relies on creating a perfectly collimated aerosol stream using a coaxial sheath gas. The ink is split into droplets with diameters between 1 and 5 microns. This aerosol is pushed into the printer nozzle where it meets the sheath gas loop. This sheath gas creates a hydrodynamically focused core, preventing nozzle contact and allowing a large working distance up to 5mm."</p>
-                <span class="script-speaker">Presenter 1:</span>
-                <p>"However, the core physical limitation here is the Stokes number equation shown on your screen. Because the droplets are transported via fluid flow drag, if you try to scale the nozzle orifice down below 10 micrometers to improve resolution, the aerodynamic drag and mass inertia limit fine deposition control, leading to line overspray and scattering. This caps standard resolution at roughly 10 microns."</p>
+            <!-- Key Concept -->
+            <div style="background:rgba(244,114,182,0.05); padding:16px 24px; border-radius:12px; border-left:3px solid #f472b6; margin:16px 0;">
+                <p style="color:#cbd5e1; font-size:0.95rem;">
+                    📐 <strong>Key Concept: "Persistence Length"</strong><br>
+                    The team defined a concept called <span class="text-highlight">"persistence length"</span> to predict how the electric field line bends. This allowed them to intentionally build <strong>complex 3D shapes</strong> like helices, zig-zags, and even <strong>downward-growing structures</strong>—something never done before at this scale.
+                </p>
             </div>
-        </section>
 
-        <section id="focusing">
-            <span class="badge">4:15 - 7:00</span>
-            <h2>3. Overcoming Inertial Constraints via Electrostatic Nano-Focusing</h2>
-            <p>
-                To break through the classical 10-micrometer resolution wall dictated by gas dynamics, Jung et al. completely reimagined the transport mechanism by introducing **Ion-Assisted Aerosol Lithography (IAAL)**. Instead of relying solely on aerodynamic sheath gas confinement, this technique passes dry, spark-generated nanoparticles through a corona charger to give them a high surface charge density.
-            </p>
-            <p>
-                As these charged nanoparticles travel toward the deposition target, they encounter a substrate overlaid with a patterned insulating mask containing a pre-existing bias voltage or localized ion accumulation. The ions create a highly localized electrostatic lens field. This field generates strong electric forces that push the incoming particles toward the exact center of the mask opening, bypassing gas streamlines.
-            </p>
-            <p>
-                This active electrical control allows for unprecedented microscale and nanoscale printing resolution, enabling the continuous growth of free-standing 3D structures such as vertical pillars, precise staircases, and 180° nanoscale helices with cross-sectional resolutions well under 100 nanometers.
-            </p>
-
-            <button class="script-toggle-btn" onclick="toggleScript('script-focusing')">💬 Toggle Presenter Script</button>
-            <div class="script-panel" id="script-focusing">
-                <span class="script-speaker">Presenter 2:</span>
-                <p>"This is where Jung et al. introduced an incredible breakthrough. To scale resolution down by multiple orders of magnitude into the true nanoscale, they bypassed aerodynamic drag completely. By heavily charging the dry nanoparticles and using an electrostatic lens array on the substrate, they forced the particles to focus into a tiny spot."</p>
-                <span class="script-speaker">Presenter 2:</span>
-                <p>"Look at the structural control they achieved: because the electric fields guide the nanoparticles directly to the tip of the growing structure, you can move the printing platform in 3D to grow vertical arrays, stair-steps, and nanoscale helices with sub-100-nm resolution. This transitions aerosol deposition from thick-film trace printing to true nanoscale 3D printing."</p>
+            <!-- Achievements -->
+            <div class="grid-3">
+                <div class="card">
+                    <div class="tag">🏗️ 3D Structures</div>
+                    <h4>Helices & Zig-zags</h4>
+                    <p style="color:#94a3b8; font-size:0.9rem;">Fabricated uniform helices, zig-zags, and stair-like structures by simply programming the stage movement.</p>
+                </div>
+                <div class="card">
+                    <div class="tag">✍️ Writing Mode</div>
+                    <h4>Letters "3D"</h4>
+                    <p style="color:#94a3b8; font-size:0.9rem;">Demonstrated writing of the letters "3" and "D" using different materials (Palladium and Copper) in the same process.</p>
+                </div>
+                <div class="card">
+                    <div class="tag">📏 The Big Win</div>
+                    <h4>&lt; 100 nm Resolution</h4>
+                    <p style="color:#94a3b8; font-size:0.9rem;">This technique achieves <span class="text-highlight">sub-100 nm</span> resolution—<strong>100 times smaller</strong> than conventional AJP (10 µm). It brings true 3D nanostructures into reality.</p>
+                </div>
             </div>
-        </section>
 
-        <section id="multimaterial">
-            <span class="badge">7:00 - 9:00</span>
-            <h2>4. Multi-Material Co-Deposition & Scaling Bottlenecks</h2>
-            <p>
-                While nanoscale focusing proves effective for single-material structures, modern industrial applications require complex multi-material layouts. Hwang et al. expanded on this by developing a hybrid, multi-material aerosol jet platform designed to blend structural polymers with active nanomaterials. A major challenge when processing co-dispersed nanoparticle inks is the fast rate of particle agglomeration driven by high surface-energy Van der Waals forces, which can quickly destabilize the ink.
-            </p>
-            <p>
-                Hwang et al. resolved this by separating the materials during transport, using independent atomization lines that combine right before reaching the print head. This configuration enables precise on-the-fly mixing of a Nylon-11 polymer matrix with highly dispersed active nanomaterials. The resulting printed composite retains a highly uniform nanoparticle distribution, achieving excellent dipole alignment for advanced piezo-electric and triboelectric energy harvesting devices without clogging the print system.
-            </p>
-
-            <button class="script-toggle-btn" onclick="toggleScript('script-multimaterial')">💬 Toggle Presenter Script</button>
-            <div class="script-panel" id="script-multimaterial">
-                <span class="script-speaker">Presenter 1:</span>
-                <p>"Now, how do we use this for real-world devices? Hwang et al. published a brilliant method in Nano Energy. When you try to mix polymers and nanoparticles in a single fluid ink, they quickly clump together and clog the system. Their solution was to split the process into a multi-jet aerosol system, keeping the Nylon polymer matrix and the nanomaterials in separate atomization chambers."</p>
-                <span class="script-speaker">Presenter 2:</span>
-                <p>"Exactly. By mixing the separate aerosol streams right inside the deposition tip, they achieved exceptional nanoparticle dispersion throughout the polymer matrix upon contact with the substrate. This uniform distribution unlocked unprecedented electrical properties, producing high-performance energy-harvesting nanogenerators. This addresses the ultimate scaling bottleneck of modern nano-ink formulation."</p>
+            <!-- ==== EMBEDDED VIDEO 3 (Ion-Assisted Aerosol Lithography) ==== -->
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/8CgX7uXqJAg" title="Ion Assisted Aerosol Lithography" allowfullscreen></iframe>
             </div>
-        </section>
+            <p style="text-align:center; font-size:0.8rem; color:#64748b;">📺 Video: Ion-Assisted Aerosol Lithography (IAAL)</p>
+        </div>
+    </section>
 
-        <section id="matrix">
-            <span class="badge">9:00 - 10:00</span>
-            <h2>5. Engineering Cross-Paper Parameter Matrix</h2>
-            <p>
-                To provide a clear overview of these three approaches, the evaluation matrix below highlights the core differences in atomization mechanisms, operating resolutions, transport states, and primary applications across the selected research.
-            </p>
+    <!-- ============================================================
+    SECTION 5: GAP ANALYSIS
+    ============================================================ -->
+    <section>
+        <div class="container">
+            <span class="badge" style="color:#fbbf24; border-color:rgba(251,191,36,0.3); background:rgba(251,191,36,0.1);">GAP Analysis</span>
+            <h2>Where Do They Connect?</h2>
+            <p style="color:#94a3b8; margin-bottom:24px;">Each paper solves a specific piece of the puzzle. Here is the big picture.</p>
 
-            <table>
+            <table class="comparison-table">
                 <thead>
                     <tr>
-                        <th>Engineering Dimension</th>
-                        <th>Paper 1: Wilkinson et al. (Review)</th>
-                        <th>Paper 2: Jung et al. (Nano-Focusing)</th>
-                        <th>Paper 3: Hwang et al. (Multi-Material)</th>
+                        <th>Aspect</th>
+                        <th>Paper 1 (Review)</th>
+                        <th>Paper 2 (AM3D)</th>
+                        <th>Paper 3 (Charged Aerosol)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>Atomization Source Method</strong></td>
-                        <td>Ultrasonic (1–2.5 MHz) & Pneumatic Shear</td>
-                        <td>Spark Generation (Dry Evaporation)</td>
-                        <td>Dual Independent Ultrasonic Nebulization</td>
+                        <td><strong>Core Focus</strong></td>
+                        <td>Explains the fundamentals</td>
+                        <td>Fixes material mixing</td>
+                        <td>Pushes resolution to the extreme</td>
                     </tr>
                     <tr>
-                        <td><strong>Core Focusing Driver</strong></td>
-                        <td>Aerodynamic Coaxial Sheath Gas</td>
-                        <td>Electrostatic Ion-Lens Focusing Mask</td>
-                        <td>Combined Hydrodynamic Coaxial Nozzle Flow</td>
+                        <td><strong>Resolution</strong></td>
+                        <td>~10 µm</td>
+                        <td>Micro-scale</td>
+                        <td class="highlight-cell">&lt; 100 nm</td>
                     </tr>
                     <tr>
-                        <td><strong>Minimum Achieved Feature Size</strong></td>
-                        <td>~10 μm line widths</td>
-                        <td>&lt; 100 nm spatial feature diameters</td>
-                        <td>Micro-scale multi-phase thick structures</td>
+                        <td><strong>Dimension</strong></td>
+                        <td>2D / 2.5D</td>
+                        <td>2D films + Stacked 3D</td>
+                        <td class="highlight-cell">True 3D (Helices, overhangs)</td>
                     </tr>
                     <tr>
-                        <td><strong>Material Transport Phase</strong></td>
-                        <td>Liquid-Suspended Droplet Mists</td>
-                        <td>Dry Charged Solid Nanoparticles</td>
-                        <td>Co-mixed Polymer + Functional Particle Mists</td>
+                        <td><strong>Materials</strong></td>
+                        <td>Single-material inks</td>
+                        <td class="highlight-cell">Polymer + Nanoparticle blends</td>
+                        <td>Single metals (Pd, Cu)</td>
                     </tr>
                     <tr>
-                        <td><strong>Target Application Domain</strong></td>
-                        <td>Planar Conformal Micro-Electronics</td>
-                        <td>True 3D Interconnects & Freeform Helices</td>
-                        <td>Triboelectric/Piezo Energy Harvesting Skins</td>
+                        <td><strong>Driving Force</strong></td>
+                        <td>Gas flow</td>
+                        <td>Dual-gas atomization</td>
+                        <td class="highlight-cell">Electric fields</td>
                     </tr>
                 </tbody>
             </table>
 
-            <button class="script-toggle-btn" onclick="toggleScript('script-matrix')">💬 Toggle Presenter Script</button>
-            <div class="script-panel" id="script-matrix">
-                <span class="script-speaker">Presenter 1:</span>
-                <p>"To wrap up, look at this engineering matrix summarizing our narrative arc. We went from Wilkinson's classic 10-micron fluid systems, through Jung's sub-100-nanometer dry electrostatic focusing, all the way to Hwang's multi-material functional energy harvesting devices."</p>
-                <span class="script-speaker">Presenter 2:</span>
-                <p>"By evaluating these three papers together, we can see that the future of aerosol printing relies on combining advanced electric field manipulation with smart, multi-material delivery systems. Thank you for your time, and we look forward to your questions!"</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 24px;">
+                <div style="background:rgba(96,165,250,0.06); padding:20px; border-radius:12px; text-align:center; border:1px solid rgba(96,165,250,0.1);">
+                    <div style="font-size:1.2rem; color:#60a5fa; font-weight:700;">P1 → P2</div>
+                    <p style="font-size:0.85rem; color:#94a3b8; margin-top:6px;">"Inks are hard to mix" → "So we don't mix them until the last second!"</p>
+                </div>
+                <div style="background:rgba(167,139,250,0.06); padding:20px; border-radius:12px; text-align:center; border:1px solid rgba(167,139,250,0.1);">
+                    <div style="font-size:1.2rem; color:#a78bfa; font-weight:700;">P2 → P3</div>
+                    <p style="font-size:0.85rem; color:#94a3b8; margin-top:6px;">"We have great materials, but they're micro-sized" → "Now let's shrink them to nano-scale in 3D."</p>
+                </div>
+                <div style="background:rgba(244,114,182,0.06); padding:20px; border-radius:12px; text-align:center; border:1px solid rgba(244,114,182,0.1);">
+                    <div style="font-size:1.2rem; color:#f472b6; font-weight:700;">P1 → P3</div>
+                    <p style="font-size:0.85rem; color:#94a3b8; margin-top:6px;">"Physical nozzles are limiting" → "Replace the nozzle with an electric field."</p>
+                </div>
             </div>
-        </section>
 
-    </main>
+            <!-- The Missing Link -->
+            <div style="background:rgba(251,191,36,0.05); padding:20px 24px; border-radius:12px; border:2px solid rgba(251,191,36,0.2); margin-top:20px;">
+                <p style="color:#fbbf24; font-weight:700; font-size:1rem;">🔗 The Missing Link</p>
+                <p style="color:#cbd5e1; font-size:0.95rem;">
+                    <strong>Paper 3</strong> makes tiny, complex 3D shapes but only with <span class="text-highlight">one metal at a time</span>. <br>
+                    <strong>Paper 2</strong> makes perfect multi-material blends but can't make complex 3D nano-shapes. <br>
+                    <strong>Paper 1</strong> shows us the starting point. We are missing a technique that combines <span class="text-highlight">multi-material mixing + 3D nano-resolution</span>.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    SECTION 6: RESEARCH QUESTION
+    ============================================================ -->
+    <section>
+        <div class="container">
+            <span class="badge" style="color:#34d399; border-color:rgba(52,211,153,0.3); background:rgba(52,211,153,0.1);">Research Question</span>
+            <h2>The Next Logical Step</h2>
+            <div class="question-box">
+                <p class="big-q">
+                    "How can we integrate the <span style="color:#f472b6;">electric-field 3D nanoprinting</span> from Paper 3<br>
+                    with the <span style="color:#a78bfa;">separate-atomization multi-material</span> trick from Paper 2,<br>
+                    to achieve <span style="color:#fbbf24;">multi-material, true 3D nanostructures</span> in a single process?"
+                </p>
+            </div>
+            <div class="grid-2">
+                <div style="background:rgba(255,255,255,0.02); padding:24px; border-radius:12px;">
+                    <h4 style="color:#60a5fa;">🎯 Why Ask This?</h4>
+                    <ul style="color:#94a3b8; list-style:none; padding:0; font-size:0.95rem;">
+                        <li style="padding:6px 0;">✓ P3 can print <span class="text-highlight">nano-scale 3D</span> shapes, but only with one material.</li>
+                        <li style="padding:6px 0;">✓ P2 can print <span class="text-highlight">multi-materials</span> perfectly, but only flat or thick layers.</li>
+                        <li style="padding:6px 0;">✓ Combining them is the holy grail: <span class="text-highlight">"Multi-material 3D Nano-printing"</span>.</li>
+                    </ul>
+                </div>
+                <div style="background:rgba(255,255,255,0.02); padding:24px; border-radius:12px;">
+                    <h4 style="color:#a78bfa;">🔬 Where This Could Go</h4>
+                    <ul style="color:#94a3b8; list-style:none; padding:0; font-size:0.95rem;">
+                        <li style="padding:6px 0;">✓ <strong>3D Nano-electronics:</strong> Complex circuits at the molecular scale.</li>
+                        <li style="padding:6px 0;">✓ <strong>Smart Sensors:</strong> Combining different materials for multi-sensing in one tiny 3D structure.</li>
+                        <li style="padding:6px 0;">✓ <strong>Metamaterials:</strong> 3D nanostructures with properties that don't exist in nature.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    SECTION 7: CONCLUSION
+    ============================================================ -->
+    <section>
+        <div class="container" style="text-align:center;">
+            <h2 style="font-size:2.4rem;">The Grand Evolution<br><span style="font-size:1.8rem; color:#94a3b8;">Understanding the Basics → Mixing Better → Printing Smaller</span></h2>
+            <div style="display:flex; justify-content:center; gap:30px; margin:40px 0; flex-wrap:wrap;">
+                <div style="background:rgba(96,165,250,0.08); padding:16px 32px; border-radius:16px; border:1px solid rgba(96,165,250,0.2);">
+                    <div style="font-size:2.5rem; font-weight:800; color:#60a5fa;">P1</div>
+                    <div style="font-size:0.8rem; color:#94a3b8;">Foundation</div>
+                    <div style="font-size:0.7rem; color:#64748b;">What is AJP?</div>
+                </div>
+                <div style="display:flex; align-items:center; color:#64748b; font-size:2rem;">→</div>
+                <div style="background:rgba(167,139,250,0.08); padding:16px 32px; border-radius:16px; border:1px solid rgba(167,139,250,0.2);">
+                    <div style="font-size:2.5rem; font-weight:800; color:#a78bfa;">P2</div>
+                    <div style="font-size:0.8rem; color:#94a3b8;">Multi-material</div>
+                    <div style="font-size:0.7rem; color:#64748b;">Perfect mixing</div>
+                </div>
+                <div style="display:flex; align-items:center; color:#64748b; font-size:2rem;">→</div>
+                <div style="background:rgba(244,114,182,0.08); padding:16px 32px; border-radius:16px; border:1px solid rgba(244,114,182,0.2);">
+                    <div style="font-size:2.5rem; font-weight:800; color:#f472b6;">P3</div>
+                    <div style="font-size:0.8rem; color:#94a3b8;">3D Nano</div>
+                    <div style="font-size:0.7rem; color:#64748b;">Electric fields</div>
+                </div>
+            </div>
+            <p style="color:#94a3b8; max-width:700px; margin:0 auto; font-size:1.1rem;">
+                <span class="text-highlight">"How to do it"</span> (P1) → <span class="text-highlight">"How to do it better"</span> (P2) → <span class="text-highlight">"How to do it smaller"</span> (P3).
+            </p>
+            <div style="margin-top:40px; padding:20px; border-top:1px solid rgba(255,255,255,0.06);">
+                <p style="color:#64748b; font-size:0.85rem;">Presentation Complete · Thank You</p>
+                <p style="color:#475569; font-size:0.75rem;">Based on Wilkinson et al. (2019) · Hwang et al. (2024) · Jung et al. (2019)</p>
+            </div>
+        </div>
+    </section>
 
     <script>
-        // Collapsible Notes Functionality
-        function toggleScript(id) {
-            const panel = document.getElementById(id);
-            if (panel.style.display === "block") {
-                panel.style.display = "none";
-            } else {
-                panel.style.display = "block";
-            }
-        }
-
-        // Live Presentation Countdown Timer Logic
-        let duration = 600; // 10 minutes in seconds
-        let timerId = null;
-        const display = document.getElementById('countdown');
-
-        function updateDisplay(secs) {
-            let mins = Math.floor(secs / 60);
-            let remainingSecs = secs % 60;
-            display.textContent = `${mins.toString().padStart(2, '0')}:${remainingSecs.toString().padStart(2, '0')}`;
-        }
-
-        document.getElementById('startBtn').addEventListener('click', () => {
-            if (!timerId) {
-                timerId = setInterval(() => {
-                    if (duration > 0) {
-                        duration--;
-                        updateDisplay(duration);
-                    } else {
-                        clearInterval(timerId);
-                        display.style.color = '#ff7b72';
-                    }
-                }, 1000);
-            }
-        });
-
-        document.getElementById('pauseBtn').addEventListener('click', () => {
-            clearInterval(timerId);
-            timerId = null;
-        });
-
-        document.getElementById('resetBtn').addEventListener('click', () => {
-            clearInterval(timerId);
-            timerId = null;
-            duration = 600;
-            updateDisplay(duration);
-            display.style.color = 'var(--accent)';
-        });
-
-        // Navigation Highlight Tracking on Scroll
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.nav-link');
-
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 60) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').includes(current)) {
-                    link.classList.add('active');
-                }
-            });
+        // Scroll progress bar
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.scrollY;
+            let docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            let progress = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
         });
     </script>
 </body>
