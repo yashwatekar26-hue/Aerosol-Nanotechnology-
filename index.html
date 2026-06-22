@@ -96,38 +96,6 @@
       color: var(--text-muted);
     }
 
-    /* ===== FIXED BACKGROUND PARTICLES (Request 1) ===== */
-    #particle-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ===== ALL SECTIONS SIT ON TOP ===== */
-    section {
-      position: relative;
-      z-index: 2;
-      padding: 6rem 2rem;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-      overflow: hidden;
-      background: transparent;
-    }
-    .container {
-      max-width: 1200px;
-      width: 100%;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
-    }
-
     /* ===== NAVIGATION ===== */
     .floating-nav {
       position: fixed;
@@ -179,7 +147,9 @@
       transition: width 0.15s ease-out;
     }
 
-    /* ===== HERO CONTENT ===== */
+    /* ================================================================ */
+    /* HERO SECTION (with Particles confined here) - Request 1 & 2     */
+    /* ================================================================ */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -187,6 +157,17 @@
       justify-content: center;
       text-align: center;
       position: relative;
+      overflow: hidden;
+      background: var(--bg-primary);
+    }
+    #particle-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
     }
     .hero-content {
       max-width: 900px;
@@ -209,7 +190,6 @@
       letter-spacing: 0.05em;
     }
 
-    /* Author Chips (Request 2) */
     .author-chips {
       margin-top: 2rem;
       display: flex;
@@ -326,6 +306,42 @@
       box-shadow: 0 0 30px rgba(6, 182, 212, 0.3);
     }
 
+    /* ===== GENERAL SECTIONS (sit on top, no particles) ===== */
+    section {
+      position: relative;
+      z-index: 2;
+      padding: 6rem 2rem;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      overflow: hidden;
+      background: var(--bg-primary);
+    }
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .scroll-hint {
+      margin-top: 2rem;
+      color: var(--text-muted);
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(6px);
+      }
+    }
+
     /* ===== CARDS & GRIDS ===== */
     .card-grid {
       display: grid;
@@ -401,7 +417,7 @@
       font-size: 0.85rem;
     }
 
-    /* ===== DISPERSION TOGGLE (Request 4 - Visually Different) ===== */
+    /* ===== DISPERSION TOGGLE ===== */
     .dispersion-grid {
       display: flex;
       flex-direction: column;
@@ -423,12 +439,6 @@
       opacity: 0.8;
       transition: all 0.4s;
     }
-    /* Agglomeration specific - clustered (using SVG in HTML) */
-    .cluster-svg {
-      max-width: 200px;
-      height: auto;
-    }
-
     .diagram-agglomeration .clumped-group {
       opacity: 1;
       transition: opacity 0.5s;
@@ -531,7 +541,6 @@
       line-height: 1.4;
     }
 
-    /* ===== MISC ===== */
     .data-box {
       background: rgba(255, 255, 255, 0.02);
       border-left: 3px solid var(--accent-cyan);
@@ -564,20 +573,6 @@
       font-size: 0.85rem;
       border-top: 1px solid rgba(255, 255, 255, 0.04);
     }
-    .scroll-hint {
-      margin-top: 2rem;
-      color: var(--text-muted);
-      animation: bounce 2s infinite;
-    }
-    @keyframes bounce {
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(6px);
-      }
-    }
 
     [data-aos] {
       pointer-events: none;
@@ -604,26 +599,22 @@
     <a href="#question">Q</a>
   </nav>
 
-  <!-- ===== FIXED PARTICLE CANVAS (Background - Request 1) ===== -->
-  <canvas id="particle-canvas"></canvas>
-
   <!-- ================================================================ -->
-  <!-- HERO SECTION -->
+  <!-- HERO SECTION (Particles live here only)                         -->
   <!-- ================================================================ -->
   <section class="hero" id="intro">
+    <canvas id="particle-canvas"></canvas>
     <div class="container hero-content">
       <div style="color: var(--accent-cyan); font-weight: 600; letter-spacing: 0.15em; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem;">Aerosol Nanotechnology · 3 Papers</div>
       <h1>Alchemy of Aerosols</h1>
       <p class="sub">Navigating the 3D Manufacturing Frontier</p>
 
-      <!-- Author Chips (Request 2) -->
       <div class="author-chips">
         <a href="#paper1">Wilkinson &amp; Smith <span class="year">(2019)</span></a>
         <a href="#paper2">Hwang &amp; Choi <span class="year">(2024)</span></a>
         <a href="#paper3">Jung &amp; Choi <span class="year">(2019)</span></a>
       </div>
 
-      <!-- TERMINAL -->
       <div class="terminal" id="terminalWindow">
         <div id="terminalLines">
           <div class="line dim">> ACTIVE PARTICLES TRACKER INITIALIZED</div>
@@ -650,48 +641,30 @@
         <p>"Aerosol Jet Printing (AJP) is an emerging contactless direct write approach… Freeform deposition, coupled with a relatively large stand-off distance, enables increased geometric complexity. Wide material compatibility, high resolution and independence of orientation provide novelty… This overview summarises the principles, reviews applications and discusses hurdles to industry adoption."</p>
       </details>
 
-      <!-- Diagram 1 - FIXED (Request 3) -->
       <div class="diagram-container" data-aos="fade-up">
         <h4 style="color:var(--accent-cyan);">Core Mechanics: AJP Process</h4>
         <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" style="max-width:800px; width:100%; height:auto;">
-          <!-- Atomizer -->
           <rect x="20" y="130" width="90" height="60" rx="6" fill="none" stroke="#06b6d4" stroke-width="2"/>
           <text x="65" y="170" font-family="Inter" font-size="13" fill="#e2e8f0" text-anchor="middle">Atomizer</text>
           <text x="65" y="188" font-family="Inter" font-size="10" fill="#94a3b8" text-anchor="middle">(Ultrasonic/Pneumatic)</text>
-
-          <!-- Droplets -->
           <circle cx="130" cy="150" r="7" fill="#06b6d4" opacity="0.9"/>
           <circle cx="148" cy="165" r="5" fill="#06b6d4" opacity="0.7"/>
           <circle cx="165" cy="140" r="6" fill="#06b6d4" opacity="0.8"/>
-
-          <!-- Carrier Gas -->
           <line x1="20" y1="110" x2="230" y2="110" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 4"/>
           <text x="110" y="100" font-family="Inter" font-size="11" fill="#f59e0b" text-anchor="middle">Carrier Gas Flow</text>
-
-          <!-- Virtual Impactor -->
           <rect x="210" y="130" width="90" height="60" rx="6" fill="none" stroke="#a78bfa" stroke-width="2"/>
           <text x="255" y="168" font-family="Inter" font-size="13" fill="#e2e8f0" text-anchor="middle">Virtual</text>
           <text x="255" y="186" font-family="Inter" font-size="10" fill="#94a3b8" text-anchor="middle">Impactor</text>
-
-          <!-- Sheath Gas -->
           <line x1="340" y1="80" x2="340" y2="220" stroke="#10b981" stroke-width="2" stroke-dasharray="6 4"/>
           <text x="365" y="155" font-family="Inter" font-size="12" fill="#10b981">Sheath Gas</text>
-
-          <!-- Deposition Head -->
           <rect x="380" y="130" width="110" height="60" rx="6" fill="none" stroke="#06b6d4" stroke-width="2"/>
           <text x="435" y="162" font-family="Inter" font-size="13" fill="#e2e8f0" text-anchor="middle">Deposition Head</text>
           <text x="435" y="182" font-family="Inter" font-size="10" fill="#94a3b8" text-anchor="middle">(Coaxial Nozzle)</text>
-
-          <!-- Focused Stream -->
           <path d="M435 190 L435 265 L455 265 L455 190" fill="none" stroke="#06b6d4" stroke-width="2.5" opacity="0.7"/>
           <path d="M435 190 L435 265 L415 265 L415 190" fill="none" stroke="#06b6d4" stroke-width="2.5" opacity="0.7"/>
           <text x="450" y="280" font-family="Inter" font-size="12" fill="#06b6d4" font-weight="600">Focused Aerosol</text>
-
-          <!-- Substrate -->
           <rect x="370" y="275" width="180" height="20" rx="4" fill="#334155"/>
           <text x="460" y="310" font-family="Inter" font-size="13" fill="#94a3b8" text-anchor="middle">Substrate (1–5 mm stand‑off)</text>
-
-          <!-- Clean Step Labels -->
           <text x="20" y="30" font-family="Inter" font-size="14" fill="#06b6d4" font-weight="600">①</text>
           <text x="30" y="50" font-family="Inter" font-size="11" fill="#94a3b8">Atomization</text>
           <text x="210" y="30" font-family="Inter" font-size="14" fill="#a78bfa" font-weight="600">②</text>
@@ -702,7 +675,6 @@
         <div class="diagram-caption">① Liquid atomization → ② Droplet size selection (Virtual Impactor) → ③ Sheath gas focusing & coaxial deposition</div>
       </div>
 
-      <!-- User's Description -->
       <div style="background:var(--bg-card);padding:1.5rem;border-radius:12px;margin:1rem 0;border-left:3px solid var(--accent-cyan);">
         <p style="color:var(--text-main);font-size:1.05rem;">
           <i class="fas fa-quote-left" style="color:var(--accent-cyan);margin-right:8px;"></i>
@@ -740,7 +712,6 @@
         <p>"Polymer-based nanocomposites emerged in the 1960s… however, achieving uniform nanomaterial dispersion has impeded progress. Here, we present a polymer-based nanocomposite with highly dispersed nanomaterials, achieved through aerosol-jet-based multi-material three-dimensional (AM3D) printing. Numerical simulations facilitate the avoidance of interfacial compatibility issues… the 3D structured nanocomposite exhibits a uniform dielectric constant and low dielectric loss."</p>
       </details>
 
-      <!-- User's Description -->
       <div style="background:var(--bg-card);padding:1.5rem;border-radius:12px;margin:1rem 0;border-left:3px solid var(--accent-emerald);">
         <p style="color:var(--text-main);font-size:1.05rem;">
           <i class="fas fa-quote-left" style="color:var(--accent-emerald);margin-right:8px;"></i>
@@ -749,33 +720,27 @@
         </p>
       </div>
 
-      <!-- Diagram 2 - FIXED (Request 4: Visually Different) -->
       <div class="diagram-container" data-aos="fade-up">
         <h4 style="color:var(--accent-emerald);">Dispersion: Old Problem vs. New Solution</h4>
         <div class="diagram-agglomeration" id="dispersionDiagram">
           <div class="two-col" style="grid-template-columns:1fr 1fr;gap:2rem;align-items:center;">
-            <!-- Left: Agglomeration (Clustered SVG) -->
             <div>
               <h4 style="font-size:1rem;color:var(--text-muted);">❌ Pre‑Mixing (Agglomeration)</h4>
               <div class="clumped-group">
                 <svg viewBox="0 0 200 100" style="width:100%; max-width:200px; height:auto;">
-                  <!-- Cluster 1 -->
                   <circle cx="50" cy="40" r="18" fill="#f43f5e" opacity="0.8"/>
                   <circle cx="65" cy="45" r="14" fill="#f43f5e" opacity="0.7"/>
                   <circle cx="40" cy="50" r="12" fill="#f43f5e" opacity="0.6"/>
-                  <!-- Cluster 2 -->
                   <circle cx="130" cy="50" r="20" fill="#f43f5e" opacity="0.8"/>
                   <circle cx="150" cy="45" r="15" fill="#f43f5e" opacity="0.7"/>
                   <circle cx="120" cy="60" r="10" fill="#f43f5e" opacity="0.6"/>
                   <circle cx="145" cy="65" r="12" fill="#f43f5e" opacity="0.5"/>
-                  <!-- Cluster 3 -->
                   <circle cx="90" cy="75" r="16" fill="#f43f5e" opacity="0.7"/>
                   <circle cx="80" cy="85" r="12" fill="#f43f5e" opacity="0.6"/>
                 </svg>
               </div>
               <p style="color:var(--text-muted);font-size:0.85rem;">Nanoparticles clump → weak spots, electrical leakage</p>
             </div>
-            <!-- Right: Dispersed (Clean CSS dots) -->
             <div>
               <h4 style="font-size:1rem;color:var(--text-muted);">✅ Mid‑Air Blending (AM3D)</h4>
               <div class="dispersed-group">
@@ -808,7 +773,7 @@
   </section>
 
   <!-- ================================================================ -->
-  <!-- PAPER 3 -->
+  <!-- PAPER 3 - FIXED: ION CUSHION IS NOW CLEARLY VISIBLE             -->
   <!-- ================================================================ -->
   <section id="paper3" data-aos="fade-up">
     <div class="container">
@@ -821,7 +786,6 @@
         <p>"We propose a novel 3D nano-printing concept… We apply a floating dielectric mask to focus charged aerosols through a convergent electrostatic field… we found two different regimes (3D growth mode and 3D writing mode) exist depending on the translation velocity of the stage."</p>
       </details>
 
-      <!-- User's Description -->
       <div style="background:var(--bg-card);padding:1.5rem;border-radius:12px;margin:1rem 0;border-left:3px solid var(--accent-amber);">
         <p style="color:var(--text-main);font-size:1.05rem;">
           <i class="fas fa-quote-left" style="color:var(--accent-amber);margin-right:8px;"></i>
@@ -830,54 +794,58 @@
         </p>
       </div>
 
-      <!-- Diagram 3 - FIXED (Request 5: Ion cushion visible) -->
+      <!-- UPDATED SVG: Ion Cushion is a large glowing cloud above the mask -->
       <div class="diagram-container" data-aos="fade-up">
         <h4 style="color:var(--accent-amber);">Electrostatic Focusing Architecture</h4>
-        <svg viewBox="0 0 650 350" xmlns="http://www.w3.org/2000/svg" style="max-width:600px; width:100%; height:auto;">
+        <svg viewBox="0 0 650 380" xmlns="http://www.w3.org/2000/svg" style="max-width:600px; width:100%; height:auto;">
+          
+          <!-- ION CUSHION (Glowing cloud above the mask) -->
+          <rect x="100" y="20" width="450" height="50" rx="20" fill="#f59e0b" opacity="0.15" />
+          <rect x="120" y="30" width="410" height="30" rx="15" fill="#f59e0b" opacity="0.25" />
+          <!-- Bright individual ion dots -->
+          <circle cx="150" cy="45" r="8" fill="#f59e0b" opacity="0.9" />
+          <circle cx="200" cy="35" r="6" fill="#f59e0b" opacity="0.8" />
+          <circle cx="260" cy="50" r="10" fill="#f59e0b" opacity="0.9" />
+          <circle cx="325" cy="30" r="7" fill="#f59e0b" opacity="0.8" />
+          <circle cx="380" cy="48" r="9" fill="#f59e0b" opacity="0.9" />
+          <circle cx="450" cy="38" r="6" fill="#f59e0b" opacity="0.8" />
+          <circle cx="500" cy="45" r="8" fill="#f59e0b" opacity="0.9" />
+          <text x="325" y="12" font-family="Inter" font-size="16" fill="#f59e0b" text-anchor="middle" font-weight="700">⚡ ION CUSHION (Positive Charge Accumulation)</text>
+
           <!-- Floating Mask -->
-          <rect x="140" y="40" width="370" height="30" rx="6" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
-          <text x="325" y="25" font-family="Inter" font-size="14" fill="#e2e8f0" text-anchor="middle">Floating Dielectric Mask (SiN<sub>x</sub>)</text>
+          <rect x="120" y="90" width="410" height="30" rx="6" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+          <text x="325" y="78" font-family="Inter" font-size="14" fill="#e2e8f0" text-anchor="middle">Floating Dielectric Mask (SiN<sub>x</sub>)</text>
 
           <!-- Mask Hole -->
-          <circle cx="325" cy="55" r="14" fill="#0a0a0f" stroke="#f59e0b" stroke-width="2.5"/>
+          <circle cx="325" cy="105" r="14" fill="#0a0a0f" stroke="#f59e0b" stroke-width="2.5"/>
 
-          <!-- GLOWING ION CUSHION (Now very visible) -->
-          <circle cx="140" cy="55" r="18" fill="#f59e0b" opacity="0.25"/>
-          <circle cx="140" cy="55" r="12" fill="#f59e0b" opacity="0.4"/>
-          <circle cx="140" cy="55" r="6" fill="#f59e0b" opacity="0.8"/>
-          <circle cx="510" cy="55" r="18" fill="#f59e0b" opacity="0.25"/>
-          <circle cx="510" cy="55" r="12" fill="#f59e0b" opacity="0.4"/>
-          <circle cx="510" cy="55" r="6" fill="#f59e0b" opacity="0.8"/>
-          <text x="140" y="95" font-family="Inter" font-size="12" fill="#f59e0b" text-anchor="middle" font-weight="600">Ion Cushion</text>
-          <text x="510" y="95" font-family="Inter" font-size="12" fill="#f59e0b" text-anchor="middle" font-weight="600">Ion Cushion</text>
+          <!-- Electric Field Lines (Focusing through the hole) -->
+          <path d="M325 119 Q325 160 290 210 Q260 270 325 320" fill="none" stroke="#06b6d4" stroke-width="2.5" opacity="0.5"/>
+          <path d="M325 119 Q325 160 360 210 Q390 270 325 320" fill="none" stroke="#06b6d4" stroke-width="2.5" opacity="0.5"/>
+          <path d="M325 119 Q310 160 270 210 Q240 270 325 320" fill="none" stroke="#06b6d4" stroke-width="1.5" opacity="0.3"/>
+          <path d="M325 119 Q340 160 380 210 Q410 270 325 320" fill="none" stroke="#06b6d4" stroke-width="1.5" opacity="0.3"/>
 
-          <!-- Electric Field Lines -->
-          <path d="M325 69 Q325 120 290 180 Q260 240 325 290" fill="none" stroke="#06b6d4" stroke-width="2.5" opacity="0.5"/>
-          <path d="M325 69 Q325 120 360 180 Q390 240 325 290" fill="none" stroke="#06b6d4" stroke-width="2.5" opacity="0.5"/>
-          <path d="M325 69 Q310 120 270 180 Q240 240 325 290" fill="none" stroke="#06b6d4" stroke-width="1.5" opacity="0.3"/>
-          <path d="M325 69 Q340 120 380 180 Q410 240 325 290" fill="none" stroke="#06b6d4" stroke-width="1.5" opacity="0.3"/>
+          <!-- Charged Nanoparticles (Following field lines) -->
+          <circle cx="315" cy="150" r="7" fill="#f472b6" opacity="0.9" />
+          <circle cx="345" cy="180" r="6" fill="#f472b6" opacity="0.8" />
+          <circle cx="295" cy="220" r="7" fill="#f472b6" opacity="0.9" />
+          <circle cx="355" cy="250" r="6" fill="#f472b6" opacity="0.8" />
 
-          <!-- Charged Particles -->
-          <circle cx="315" cy="110" r="6" fill="#f472b6" opacity="0.9"/>
-          <circle cx="340" cy="140" r="5" fill="#f472b6" opacity="0.8"/>
-          <circle cx="295" cy="190" r="6" fill="#f472b6" opacity="0.9"/>
-          <circle cx="355" cy="220" r="5" fill="#f472b6" opacity="0.8"/>
-
-          <!-- GROWING 3D NANOPILLAR (Now taller and prominent) -->
-          <rect x="310" y="240" width="30" height="50" rx="3" fill="url(#pillarGrad)"/>
+          <!-- GROWING 3D NANOPILLAR (Tall and prominent) -->
+          <rect x="310" y="270" width="30" height="50" rx="3" fill="url(#pillarGrad)" />
           <defs>
             <linearGradient id="pillarGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#06b6d4"/>
-              <stop offset="100%" stop-color="#10b981"/>
+              <stop offset="0%" stop-color="#06b6d4" />
+              <stop offset="100%" stop-color="#10b981" />
             </linearGradient>
           </defs>
-          <text x="325" y="310" font-family="Inter" font-size="13" fill="#e2e8f0" text-anchor="middle" font-weight="600">Growing 3D Nanopillar</text>
+          <text x="325" y="345" font-family="Inter" font-size="14" fill="#e2e8f0" text-anchor="middle" font-weight="600">Growing 3D Nanopillar</text>
 
           <!-- Substrate -->
-          <rect x="240" y="290" width="170" height="18" rx="4" fill="#334155"/>
-          <text x="325" y="325" font-family="Inter" font-size="11" fill="#94a3b8" text-anchor="middle">Substrate</text>
+          <rect x="230" y="325" width="190" height="18" rx="4" fill="#334155" />
+          <text x="325" y="365" font-family="Inter" font-size="12" fill="#94a3b8" text-anchor="middle">Substrate</text>
         </svg>
-        <div class="diagram-caption">Ion‑induced electrostatic lens focuses charged nanoparticles through mask holes onto a growing 3D nanopillar.</div>
+        <div class="diagram-caption">The ion cushion (glowing amber cloud) creates an electrostatic lens. Charged particles focus through the mask hole onto a growing 3D nanopillar.</div>
       </div>
 
       <div class="card-grid">
@@ -893,14 +861,13 @@
   </section>
 
   <!-- ================================================================ -->
-  <!-- RESEARCH GAP - UPDATED (Request 6) -->
+  <!-- RESEARCH GAP -->
   <!-- ================================================================ -->
   <section id="gap" data-aos="fade-up">
     <div class="container">
       <div class="section-label" style="color:var(--accent-rose);border-color:rgba(244,63,94,0.3);">Research Gap</div>
       <h2>Where Do They Connect?</h2>
 
-      <!-- Bulletproof Gap Statement -->
       <div style="background:var(--bg-card);padding:1.5rem 2rem;border-radius:12px;margin:1rem 0;border-left:3px solid var(--accent-rose);text-align:left;">
         <p style="color:var(--text-main);font-size:1.1rem;font-weight:400;line-height:1.6;">
           <i class="fas fa-exclamation-triangle" style="color:var(--accent-rose);margin-right:10px;"></i>
@@ -913,7 +880,6 @@
         </ul>
       </div>
 
-      <!-- Diagram 4: Synthesis Map -->
       <div class="diagram-container" data-aos="fade-up">
         <h4 style="color:var(--accent-rose);">Synthesis Matrix: The Missing Link</h4>
         <div class="gap-map">
@@ -936,14 +902,13 @@
   </section>
 
   <!-- ================================================================ -->
-  <!-- RESEARCH QUESTION - UPDATED (Request 7) -->
+  <!-- RESEARCH QUESTION -->
   <!-- ================================================================ -->
   <section id="question" data-aos="fade-up">
     <div class="container">
       <div class="section-label" style="color:#c4b5fd;border-color:rgba(196,181,253,0.3);">Research Question</div>
       <h2>The Next Logical Step</h2>
 
-      <!-- Precise, technically grounded question -->
       <div class="question-box">
         <p class="q">
           "Can the <span style="color:var(--accent-emerald);">pneumatic/ultrasonic dual‑atomization mid‑air blending</span> strategy of Hwang et al. (AM3D) be integrated with the <span style="color:var(--accent-amber);">ion‑induced electrostatic focusing lens</span> of Jung et al. (IAAL) to enable the single‑pass fabrication of <span style="color:var(--accent-cyan);">compositionally graded, sub‑100 nm resolution 3D nano‑pillars and helices</span>?"
@@ -1027,16 +992,18 @@
       document.getElementById('progressBar').style.width = (scrollTop / docHeight * 100) + '%';
     });
 
-    // ===== FIXED PARTICLES BACKGROUND (Request 1 - Full site) =====
+    // ===== PARTICLES (CONFINED TO HERO SECTION ONLY) =====
     (function() {
       const canvas = document.getElementById('particle-canvas');
       const ctx = canvas.getContext('2d');
       let width, height, particles = [];
-      const num = 100;
+      const num = 80;
 
       function resize() {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
+        // Size canvas to its parent (the hero section)
+        const rect = canvas.parentElement.getBoundingClientRect();
+        width = canvas.width = rect.width;
+        height = canvas.height = rect.height;
       }
       window.addEventListener('resize', resize);
 
@@ -1044,8 +1011,8 @@
         constructor() {
           this.x = Math.random() * width;
           this.y = Math.random() * height;
-          this.vx = (Math.random() - 0.5) * 0.25;
-          this.vy = (Math.random() - 0.5) * 0.25;
+          this.vx = (Math.random() - 0.5) * 0.3;
+          this.vy = (Math.random() - 0.5) * 0.3;
           this.r = Math.random() * 2.5 + 1;
           this.o = Math.random() * 0.4 + 0.15;
         }
