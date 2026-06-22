@@ -16,7 +16,7 @@
     /* ===== ROOT VARIABLES ===== */
     :root {
       --bg-primary: #0a0a0f;
-      --bg-card: rgba(255, 255, 255, 0.03);
+      --bg-card: rgba(255, 255, 255, 0.04);
       --text-main: #e2e8f0;
       --text-muted: #94a3b8;
       --accent-cyan: #06b6d4;
@@ -148,7 +148,7 @@
     }
 
     /* ================================================================ */
-    /* HERO SECTION (with Particles confined here)                      */
+    /* HERO SECTION */
     /* ================================================================ */
     .hero {
       min-height: 100vh;
@@ -200,7 +200,6 @@
       font-family: var(--font-mono);
       margin-top: 1rem;
     }
-
     .author-chips {
       margin-top: 2rem;
       display: flex;
@@ -297,7 +296,6 @@
         opacity: 0;
       }
     }
-
     .terminal-btn {
       background: transparent;
       border: 1px solid var(--accent-cyan);
@@ -337,7 +335,6 @@
       position: relative;
       z-index: 2;
     }
-
     .scroll-hint {
       margin-top: 2rem;
       color: var(--text-muted);
@@ -428,6 +425,177 @@
       font-size: 0.85rem;
     }
 
+    /* ===== NEW: HTML/CSS ELECTROSTATIC VISUAL ===== */
+    .electrostatic-visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 1.5rem 0.5rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .ev-layer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 10px 18px;
+      border-radius: 12px;
+      width: 100%;
+      min-height: 60px;
+      border: 2px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.02);
+      position: relative;
+    }
+    .ev-layer .label {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .ev-layer .icon-big {
+      font-size: 1.8rem;
+    }
+    .ev-arrow {
+      font-size: 1.8rem;
+      color: var(--text-muted);
+      opacity: 0.5;
+    }
+
+    /* Ion Cushion */
+    .ev-ion {
+      border-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.08);
+    }
+    .ev-ion .label {
+      color: #f59e0b;
+    }
+
+    /* Mask */
+    .ev-mask {
+      border-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.05);
+    }
+    .ev-mask .label {
+      color: #e2e8f0;
+    }
+    .ev-mask .hole {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid #f59e0b;
+      background: #0a0a0f;
+      margin-left: 8px;
+    }
+
+    /* Field Lines */
+    .ev-field {
+      border-color: #06b6d4;
+      background: rgba(6, 182, 212, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 12px 18px;
+      min-height: 70px;
+    }
+    .ev-field .label {
+      color: #06b6d4;
+    }
+    .ev-field .field-lines {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      width: 100%;
+    }
+    .ev-field .field-line {
+      width: 3px;
+      height: 30px;
+      background: #06b6d4;
+      opacity: 0.5;
+      border-radius: 4px;
+      position: relative;
+    }
+    .ev-field .field-line .dot {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #f472b6;
+      top: -6px;
+      left: -3.5px;
+      box-shadow: 0 0 12px #f472b6;
+    }
+
+    /* Pillar */
+    .ev-pillar {
+      border-color: #06b6d4;
+      background: rgba(6, 182, 212, 0.08);
+      min-height: 80px;
+    }
+    .ev-pillar .label {
+      color: #06b6d4;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .ev-pillar .pillar-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .ev-pillar .pillar-body {
+      width: 40px;
+      height: 50px;
+      background: linear-gradient(to bottom, #06b6d4, #10b981);
+      border-radius: 6px 6px 0 0;
+      border: 2px solid #06b6d4;
+      box-shadow: 0 0 30px rgba(6, 182, 212, 0.2);
+    }
+
+    /* Substrate */
+    .ev-substrate {
+      border-color: #334155;
+      background: rgba(51, 65, 85, 0.2);
+      min-height: 40px;
+    }
+    .ev-substrate .label {
+      color: #94a3b8;
+    }
+    .ev-substrate .substrate-block {
+      width: 80%;
+      height: 16px;
+      background: #334155;
+      border-radius: 4px;
+    }
+
+    /* Arrow between layers */
+    .ev-connector {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      color: #64748b;
+      padding: 2px 0;
+    }
+
+    @media (max-width: 600px) {
+      .ev-layer {
+        flex-wrap: wrap;
+        padding: 12px;
+        min-height: 50px;
+      }
+      .ev-field .field-lines {
+        gap: 12px;
+      }
+      .ev-field .field-line {
+        height: 20px;
+      }
+      .ev-pillar .pillar-body {
+        height: 35px;
+        width: 30px;
+      }
+    }
+
     /* ===== DISPERSION TOGGLE ===== */
     .dispersion-grid {
       display: flex;
@@ -464,7 +632,6 @@
     .diagram-agglomeration.show-dispersed .dispersed-group {
       opacity: 1;
     }
-
     .toggle-btn {
       background: var(--accent-cyan-dim);
       border: 1px solid var(--accent-cyan);
@@ -551,7 +718,6 @@
       font-family: var(--font-heading);
       line-height: 1.4;
     }
-
     .data-box {
       background: rgba(255, 255, 255, 0.02);
       border-left: 3px solid var(--accent-cyan);
@@ -576,7 +742,6 @@
       color: var(--text-muted);
       font-style: italic;
     }
-
     footer {
       text-align: center;
       padding: 2rem;
@@ -584,7 +749,6 @@
       font-size: 0.85rem;
       border-top: 1px solid rgba(255, 255, 255, 0.04);
     }
-
     [data-aos] {
       pointer-events: none;
     }
@@ -619,7 +783,7 @@
       <div style="color: var(--accent-cyan); font-weight: 600; letter-spacing: 0.15em; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem;">Aerosol Nanotechnology · 3 Papers</div>
       <h1>Alchemy of Aerosols</h1>
       <p class="sub">Navigating the 3D Manufacturing Frontier</p>
-      <div class="version-badge"><i class="fas fa-code-branch"></i> v4.0 · SIMPLEST PILLAR</div>
+      <div class="version-badge"><i class="fas fa-code-branch"></i> v5.0 · NEW VISUAL</div>
       <div class="author-chips">
         <a href="#paper1">Wilkinson &amp; Smith <span class="year">(2019)</span></a>
         <a href="#paper2">Hwang &amp; Choi <span class="year">(2024)</span></a>
@@ -772,7 +936,7 @@
   </section>
 
   <!-- ================================================================ -->
-  <!-- PAPER 3 - SIMPLEST POSSIBLE SVG WITH MASSIVE RED PILLAR        -->
+  <!-- PAPER 3 - NEW HTML/CSS VISUAL (NO SVG)                         -->
   <!-- ================================================================ -->
   <section id="paper3" data-aos="fade-up">
     <div class="container">
@@ -791,55 +955,67 @@
         </p>
       </div>
 
-      <!-- ===== BRAND NEW ULTRA-SIMPLE SVG WITH BIG RED PILLAR ===== -->
+      <!-- ===== NEW: HTML/CSS VISUAL (REPLACES BROKEN SVG) ===== -->
       <div class="diagram-container" data-aos="fade-up">
         <h4 style="color:var(--accent-amber);">Electrostatic Focusing Architecture</h4>
-        <svg viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg" style="max-width:650px; width:100%; height:auto; background:#0a0a0f; border-radius:8px;">
 
-          <!-- ===== 1. ION CUSHION (Yellow cloud) ===== -->
-          <ellipse cx="350" cy="60" rx="260" ry="50" fill="#f59e0b" opacity="0.1" />
-          <rect x="180" y="30" width="340" height="60" rx="30" fill="#f59e0b" opacity="0.15" />
-          <circle cx="220" cy="55" r="14" fill="#fbbf24" opacity="0.9" />
-          <circle cx="280" cy="40" r="10" fill="#f59e0b" opacity="0.8" />
-          <circle cx="350" cy="65" r="18" fill="#fbbf24" opacity="0.95" />
-          <circle cx="420" cy="45" r="12" fill="#f59e0b" opacity="0.85" />
-          <circle cx="480" cy="60" r="15" fill="#fbbf24" opacity="0.9" />
-          <text x="350" y="20" font-family="Inter" font-size="20" fill="#f59e0b" text-anchor="middle" font-weight="800">⚡ ION CUSHION (Positive Charge)</text>
+        <div class="electrostatic-visual">
 
-          <!-- ===== 2. FLOATING MASK ===== -->
-          <rect x="180" y="150" width="340" height="30" rx="6" fill="none" stroke="#f59e0b" stroke-width="2.5" />
-          <text x="350" y="140" font-family="Inter" font-size="15" fill="#e2e8f0" text-anchor="middle">Floating Dielectric Mask (SiN<sub>x</sub>)</text>
-          <circle cx="350" cy="165" r="16" fill="#0a0a0f" stroke="#f59e0b" stroke-width="2.5" />
+          <!-- 1. Ion Cushion -->
+          <div class="ev-layer ev-ion">
+            <span class="icon-big">⚡</span>
+            <span class="label">ION CUSHION (Positive Charge)</span>
+            <span style="color:#f59e0b; font-size:0.8rem; opacity:0.7;">⬅️ Glowing cloud</span>
+          </div>
 
-          <!-- ===== 3. ELECTRIC FIELD LINES ===== -->
-          <path d="M350 181 Q350 220 300 270 Q270 320 350 390" fill="none" stroke="#06b6d4" stroke-width="2.5" stroke-dasharray="6 4" opacity="0.5" />
-          <path d="M350 181 Q350 220 400 270 Q430 320 350 390" fill="none" stroke="#06b6d4" stroke-width="2.5" stroke-dasharray="6 4" opacity="0.5" />
+          <div class="ev-connector">↓</div>
 
-          <!-- ===== 4. CHARGED PARTICLES ===== -->
-          <circle cx="335" cy="230" r="8" fill="#f472b6" opacity="0.9" />
-          <circle cx="370" cy="270" r="7" fill="#f472b6" opacity="0.8" />
-          <circle cx="320" cy="320" r="8" fill="#f472b6" opacity="0.9" />
-          <circle cx="380" cy="360" r="7" fill="#f472b6" opacity="0.8" />
+          <!-- 2. Floating Mask -->
+          <div class="ev-layer ev-mask">
+            <span class="icon-big" style="font-size:1.2rem;">⬜</span>
+            <span class="label">Floating Dielectric Mask (SiN<sub>x</sub>)</span>
+            <span class="hole"></span>
+          </div>
 
-          <!-- ===== 5. THE PILLAR – BIG, BOLD, RED (GUARANTEED VISIBLE) ===== -->
-          <!-- Outer glow -->
-          <rect x="315" y="375" width="70" height="80" rx="6" fill="#ff4444" opacity="0.15" />
-          <!-- Pillar body - bright red -->
-          <rect x="325" y="385" width="50" height="80" rx="4" fill="#ff4444" stroke="#ff8888" stroke-width="3" />
-          <!-- Label -->
-          <text x="410" y="430" font-family="Inter" font-size="20" fill="#ff4444" font-weight="800" stroke="#0a0a0f" stroke-width="2">GROWING 3D NANOPILLAR</text>
-          <line x1="390" y1="425" x2="375" y2="425" stroke="#ff4444" stroke-width="4" />
+          <div class="ev-connector">↓</div>
 
-          <!-- ===== 6. SUBSTRATE ===== -->
-          <rect x="240" y="465" width="220" height="20" rx="4" fill="#334155" />
-          <text x="350" y="495" font-family="Inter" font-size="14" fill="#94a3b8" text-anchor="middle">Substrate</text>
+          <!-- 3. Electric Field Lines -->
+          <div class="ev-layer ev-field">
+            <span class="label"><i class="fas fa-bolt"></i> Electric Field Focusing</span>
+            <div class="field-lines">
+              <div class="field-line"><span class="dot"></span></div>
+              <div class="field-line"><span class="dot"></span></div>
+              <div class="field-line"><span class="dot"></span></div>
+              <div class="field-line"><span class="dot"></span></div>
+            </div>
+            <span style="color:#f472b6; font-size:0.75rem;">⬆️ Charged nanoparticles follow field lines</span>
+          </div>
 
-          <!-- Arrow -->
-          <path d="M 350 90 L 350 150" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 4" opacity="0.6" />
-          <text x="360" y="125" font-family="Inter" font-size="12" fill="#f59e0b" opacity="0.8">Electric Field</text>
-        </svg>
-        <div class="diagram-caption" style="font-size:1rem; color:#ff4444; font-weight:600;">
-          <span style="color:var(--accent-amber);">ION CUSHION</span> focuses charged particles through the mask hole onto a <span style="color:#ff4444;">MASSIVE RED 3D NANOPILLAR</span> (80 px tall).
+          <div class="ev-connector">↓</div>
+
+          <!-- 4. Growing 3D Nanopillar -->
+          <div class="ev-layer ev-pillar">
+            <span class="icon-big">🏗️</span>
+            <div class="pillar-block">
+              <div class="pillar-body"></div>
+              <span class="label">GROWING 3D NANOPILLAR</span>
+              <span style="color:#06b6d4; font-size:0.75rem;">⬅️ Vertical growth from particle accumulation</span>
+            </div>
+          </div>
+
+          <div class="ev-connector">↓</div>
+
+          <!-- 5. Substrate -->
+          <div class="ev-layer ev-substrate">
+            <span class="icon-big" style="font-size:1rem;">▬</span>
+            <span class="label">Substrate</span>
+            <div class="substrate-block"></div>
+          </div>
+
+        </div>
+
+        <div class="diagram-caption" style="font-size:1rem;">
+          <span style="color:var(--accent-amber);font-weight:700;">ION CUSHION</span> creates an electrostatic lens that focuses charged nanoparticles through the mask hole onto a <span style="color:#06b6d4;font-weight:700;">GROWING 3D NANOPILLAR</span> on the substrate.
         </div>
       </div>
 
@@ -956,7 +1132,7 @@
         From foundational mechanics → flawless material blending → atomic-scale 3D construction.
       </p>
       <footer style="border-top:none;margin-top:2rem;">
-        <p>PRESENTATION MODE ACTIVE · v4.0 · RED PILLAR</p>
+        <p>PRESENTATION MODE ACTIVE · v5.0 · NEW HTML VISUAL</p>
         <p style="font-size:0.75rem;color:var(--text-muted);">Based on Wilkinson et al. (2019) · Hwang et al. (2024) · Jung et al. (2019)</p>
       </footer>
     </div>
