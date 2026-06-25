@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aerosol Jet Printing · Three Papers · One Goal</title>
+  <title>Aerosol Jet · Three Papers · A New View</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -12,17 +12,24 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
   <style>
-    /* ===== ROOT ===== */
+    /* ================================================================
+       ROOT
+       ================================================================ */
     :root {
-      --bg: #0b0b12;
+      --bg: #0b0e1a;
       --bg-card: rgba(255, 255, 255, 0.03);
-      --text: #e8e8f0;
-      --text-muted: #94a3b8;
-      --cyan: #06b6d4;
-      --cyan-dim: rgba(6, 182, 212, 0.12);
-      --emerald: #10b981;
+      --bg-card-hover: rgba(255, 255, 255, 0.06);
+      --text: #e2e8f0;
+      --text-muted: #8892a8;
+      --text-dim: #5a6478;
+      --teal: #2dd4bf;
+      --teal-dim: rgba(45, 212, 191, 0.12);
       --amber: #f59e0b;
-      --rose: #f43f5e;
+      --amber-dim: rgba(245, 158, 11, 0.12);
+      --rose: #f472b6;
+      --rose-dim: rgba(244, 114, 182, 0.12);
+      --purple: #a78bfa;
+      --purple-dim: rgba(167, 139, 250, 0.12);
       --font-heading: 'Space Grotesk', sans-serif;
       --font-body: 'Inter', sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
@@ -36,6 +43,7 @@
       font-family: var(--font-body);
       font-weight: 300;
       line-height: 1.7;
+      overflow-x: hidden;
     }
 
     h1, h2, h3, h4 {
@@ -45,98 +53,124 @@
       color: #fff;
     }
     h1 { font-size: 3.8rem; }
-    h2 { font-size: 2.6rem; margin-bottom: 0.75rem; }
-    h3 { font-size: 1.6rem; margin-bottom: 0.5rem; }
-    .section-label {
+    h2 { font-size: 2.4rem; margin-bottom: 0.75rem; }
+    h3 { font-size: 1.5rem; margin-bottom: 0.4rem; }
+    .section-tag {
       display: inline-block;
-      background: var(--cyan-dim);
-      color: var(--cyan);
-      font-size: 0.7rem;
+      background: var(--teal-dim);
+      color: var(--teal);
+      font-size: 0.65rem;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      padding: 0.2rem 1rem;
+      letter-spacing: 0.12em;
+      padding: 0.15rem 1rem;
       border-radius: 20px;
-      margin-bottom: 0.5rem;
-      border: 1px solid rgba(6,182,212,0.2);
+      border: 1px solid rgba(45, 212, 191, 0.15);
     }
     .text-muted { color: var(--text-muted); }
-    .text-cyan { color: var(--cyan); }
-    .text-emerald { color: var(--emerald); }
+    .text-teal { color: var(--teal); }
     .text-amber { color: var(--amber); }
     .text-rose { color: var(--rose); }
+    .text-purple { color: var(--purple); }
 
-    /* ===== PROGRESS BAR ===== */
+    /* ================================================================
+       SIDEBAR NAVIGATION
+       ================================================================ */
+    .sidebar {
+      position: fixed;
+      left: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: rgba(11, 14, 26, 0.7);
+      backdrop-filter: blur(12px);
+      padding: 12px 10px;
+      border-radius: 40px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 20px;
+      transition: 0.3s;
+      font-family: var(--font-body);
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+    .sidebar a .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text-dim);
+      transition: 0.3s;
+      flex-shrink: 0;
+    }
+    .sidebar a:hover { color: #fff; background: rgba(255,255,255,0.04); }
+    .sidebar a:hover .dot { background: var(--teal); }
+    .sidebar a.active { color: #fff; background: rgba(45, 212, 191, 0.08); }
+    .sidebar a.active .dot { background: var(--teal); box-shadow: 0 0 16px rgba(45, 212, 191, 0.3); }
+
+    /* ================================================================
+       PROGRESS BAR
+       ================================================================ */
     .progress-container {
       position: fixed;
       top: 0; left: 0;
-      width: 100%; height: 3px;
-      background: rgba(255,255,255,0.05);
+      width: 100%; height: 2px;
+      background: rgba(255,255,255,0.03);
       z-index: 9999;
     }
     .progress-bar {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, var(--cyan), var(--emerald));
+      background: linear-gradient(90deg, var(--teal), var(--amber));
       transition: width 0.15s;
     }
 
-    /* ===== FLOATING NAV ===== */
-    .floating-nav {
-      position: fixed;
-      top: 16px; left: 50%;
-      transform: translateX(-50%);
-      z-index: 999;
-      background: rgba(11, 11, 18, 0.85);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 40px;
-      padding: 0.3rem 0.8rem;
-      display: flex;
-      gap: 0.3rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-    }
-    .floating-nav a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.65rem;
-      font-weight: 600;
-      padding: 0.25rem 0.7rem;
-      border-radius: 20px;
-      transition: 0.2s;
-      font-family: var(--font-body);
-      letter-spacing: 0.03em;
-    }
-    .floating-nav a:hover {
-      background: var(--cyan-dim);
-      color: #fff;
-    }
-
-    /* ===== SECTIONS ===== */
+    /* ================================================================
+       SECTIONS
+       ================================================================ */
     section {
-      padding: 5rem 2rem;
+      padding: 5rem 2rem 5rem 6rem;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-bottom: 1px solid rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.02);
       background: var(--bg);
+      position: relative;
     }
+    section:last-child { border-bottom: none; }
     .container {
       max-width: 1100px;
       width: 100%;
       margin: 0 auto;
     }
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      section { padding: 3rem 1.2rem; }
+      h1 { font-size: 2.5rem; }
+      h2 { font-size: 1.8rem; }
+    }
 
-    /* ===== HERO ===== */
+    /* ================================================================
+       HERO
+       ================================================================ */
     .hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
+      text-align: left;
       position: relative;
       overflow: hidden;
     }
@@ -148,117 +182,113 @@
       z-index: 0;
     }
     .hero-content {
-      max-width: 850px;
+      max-width: 900px;
       position: relative;
       z-index: 1;
     }
-    .hero h1 {
-      font-size: 4.6rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, #06b6d4, #10b981);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 0.2rem;
-    }
-    .hero .sub {
-      font-size: 1.5rem;
-      color: var(--text-muted);
-      font-weight: 300;
-      letter-spacing: 0.05em;
-    }
-    .hero .tagline {
-      margin-top: 1.5rem;
+    .hero .badge-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.8rem;
-      justify-content: center;
+      gap: 10px;
+      margin-bottom: 1rem;
     }
-    .hero .tagline span {
+    .hero .badge-row span {
       background: rgba(255,255,255,0.04);
-      padding: 0.3rem 1.2rem;
-      border-radius: 40px;
-      border: 1px solid rgba(255,255,255,0.06);
-      font-size: 0.8rem;
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+      font-size: 0.7rem;
       color: var(--text-muted);
+      border: 1px solid rgba(255,255,255,0.04);
     }
-    .scroll-hint {
-      margin-top: 2rem;
+    .hero h1 {
+      font-size: 4.8rem;
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 0.3rem;
+    }
+    .hero h1 .highlight-teal { color: var(--teal); }
+    .hero h1 .highlight-amber { color: var(--amber); }
+    .hero .sub {
+      font-size: 1.4rem;
       color: var(--text-muted);
-      font-size: 0.85rem;
+      font-weight: 300;
+      max-width: 600px;
+    }
+    .hero .scroll-hint {
+      margin-top: 2.5rem;
+      color: var(--text-dim);
+      font-size: 0.8rem;
       animation: bounce 2s infinite;
     }
     @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
 
-    /* ===== CARDS ===== */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-      margin: 1.5rem 0;
-    }
-    .card {
-      background: var(--bg-card);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 14px;
-      padding: 1.5rem;
-      transition: transform 0.2s, border-color 0.2s;
-    }
-    .card:hover { transform: translateY(-3px); border-color: var(--cyan); }
-    .card .icon { font-size: 1.8rem; color: var(--cyan); margin-bottom: 0.3rem; }
-    .card h4 { font-size: 1.1rem; margin-bottom: 0.2rem; }
-    .card p { color: var(--text-muted); font-size: 0.9rem; }
-
-    /* ===== PAPER CARDS (3-Level) ===== */
-    .paper-card {
-      background: var(--bg-card);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 16px;
-      padding: 1.8rem;
-      margin: 1.5rem 0;
-      transition: border-color 0.3s;
-    }
-    .paper-card:hover { border-color: rgba(6,182,212,0.3); }
-    .paper-card .paper-header {
+    /* ================================================================
+       PAPER TABS
+       ================================================================ */
+    .paper-tabs {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+      gap: 0.8rem;
       flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
+      margin: 1.5rem 0 1rem;
     }
-    .paper-card .paper-header h3 { margin-bottom: 0; }
-    .paper-card .paper-meta { color: var(--text-muted); font-size: 0.85rem; }
-    .paper-card .level {
-      background: rgba(255,255,255,0.04);
-      border-radius: 8px;
-      padding: 0.8rem 1rem;
-      margin: 0.6rem 0;
-      border-left: 3px solid var(--cyan);
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .paper-card .level:hover { background: rgba(255,255,255,0.06); }
-    .paper-card .level .level-label {
+    .paper-tabs button {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      color: var(--text-muted);
+      padding: 0.6rem 1.8rem;
+      border-radius: 30px;
+      font-family: var(--font-body);
       font-weight: 600;
       font-size: 0.85rem;
-      color: var(--cyan);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      cursor: pointer;
+      transition: 0.3s;
     }
-    .paper-card .level .level-content {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin-top: 0.4rem;
-      display: none;
-    }
-    .paper-card .level.open .level-content { display: block; }
+    .paper-tabs button:hover { background: rgba(255,255,255,0.06); color: #fff; }
+    .paper-tabs button.active { background: var(--teal-dim); border-color: var(--teal); color: var(--teal); }
+    .paper-tabs button[data-paper="2"].active { background: var(--amber-dim); border-color: var(--amber); color: var(--amber); }
+    .paper-tabs button[data-paper="3"].active { background: var(--rose-dim); border-color: var(--rose); color: var(--rose); }
 
-    /* ===== DIAGRAM CONTAINER ===== */
+    .paper-panel {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+    .paper-panel.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .paper-panel .panel-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .paper-panel .panel-item {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 12px;
+      padding: 1.2rem 1.5rem;
+    }
+    .paper-panel .panel-item .label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+    .paper-panel .panel-item .value {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 0.2rem;
+    }
+    .paper-panel .panel-item .value strong { color: #fff; }
+    @media (max-width: 768px) {
+      .paper-panel .panel-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ================================================================
+       DIAGRAM CONTAINER
+       ================================================================ */
     .diagram-container {
       background: var(--bg-card);
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.04);
       border-radius: 16px;
       padding: 1.5rem;
       margin: 1.5rem 0;
@@ -276,64 +306,45 @@
       font-size: 0.8rem;
     }
 
-    /* ===== TWO COLUMN ===== */
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      align-items: start;
-    }
-    @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
-
-    /* ===== COMPARISON TABLE ===== */
-    .comparison-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.85rem;
-      margin: 1.5rem 0;
-    }
-    .comparison-table th,
-    .comparison-table td {
-      padding: 12px 14px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      text-align: left;
-    }
-    .comparison-table th {
-      background: rgba(255,255,255,0.03);
-      font-weight: 600;
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .comparison-table .highlight { color: var(--cyan); font-weight: 600; }
-
-    /* ===== GAP MAP ===== */
-    .gap-map {
+    /* ================================================================
+       VENN DIAGRAM (Gap)
+       ================================================================ */
+    .venn-wrapper {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 1rem;
+      gap: 2rem;
       flex-wrap: wrap;
       margin: 1.5rem 0;
+      padding: 1rem;
     }
-    .gap-node {
-      background: var(--bg-card);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px;
-      padding: 1.2rem 1.5rem;
-      text-align: center;
-      flex: 1 1 160px;
-      min-width: 130px;
-    }
-    .gap-node .label { font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; }
-    .gap-node .title { font-size: 1rem; font-weight: 600; margin: 0.3rem 0 0.1rem; }
-    .gap-node .desc { color: var(--text-muted); font-size: 0.8rem; }
-    .gap-center {
-      background: rgba(244,63,94,0.1);
-      border: 2px solid var(--rose);
+    .venn-circle {
+      width: 160px;
+      height: 160px;
       border-radius: 50%;
-      width: 120px; height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex-direction: column;
+      padding: 1rem;
+      border: 2px solid rgba(255,255,255,0.06);
+      transition: 0.3s;
+      cursor: default;
+    }
+    .venn-circle:hover { transform: scale(1.04); }
+    .venn-circle.c1 { background: rgba(45, 212, 191, 0.06); border-color: var(--teal); }
+    .venn-circle.c2 { background: rgba(245, 158, 11, 0.06); border-color: var(--amber); }
+    .venn-circle.c3 { background: rgba(244, 114, 182, 0.06); border-color: var(--rose); }
+    .venn-circle .label { font-size: 0.7rem; color: var(--text-dim); font-weight: 600; text-transform: uppercase; }
+    .venn-circle .title { font-size: 1rem; font-weight: 600; margin: 0.2rem 0; }
+    .venn-circle .desc { font-size: 0.75rem; color: var(--text-muted); }
+    .venn-gap {
+      background: rgba(167, 139, 250, 0.08);
+      border: 2px solid var(--purple);
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -341,62 +352,110 @@
       padding: 1rem;
       flex-shrink: 0;
     }
-    .gap-center .big { color: var(--rose); font-weight: 700; font-size: 1rem; line-height: 1.3; }
+    .venn-gap .big { color: var(--purple); font-weight: 700; font-size: 0.95rem; line-height: 1.3; }
+    @media (max-width: 768px) {
+      .venn-circle { width: 120px; height: 120px; }
+      .venn-gap { width: 90px; height: 90px; }
+      .venn-gap .big { font-size: 0.75rem; }
+    }
 
-    /* ===== QUESTION BOX ===== */
+    /* ================================================================
+       COMPARISON CARDS
+       ================================================================ */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .compare-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 14px;
+      padding: 1.2rem 1.5rem;
+      transition: 0.3s;
+    }
+    .compare-card:hover { background: var(--bg-card-hover); border-color: rgba(255,255,255,0.08); }
+    .compare-card .header { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.3rem; }
+    .compare-card .row { display: flex; justify-content: space-between; padding: 0.3rem 0; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 0.85rem; }
+    .compare-card .row .key { color: var(--text-dim); }
+    .compare-card .row .val { color: var(--text-muted); }
+    .compare-card .row .val.highlight { color: var(--teal); font-weight: 600; }
+    @media (max-width: 768px) { .compare-grid { grid-template-columns: 1fr; } }
+
+    /* ================================================================
+       QUESTION BOX
+       ================================================================ */
     .question-box {
-      background: linear-gradient(135deg, rgba(6,182,212,0.06), rgba(16,185,129,0.06));
-      border: 2px solid rgba(6,182,212,0.15);
+      background: linear-gradient(135deg, rgba(45, 212, 191, 0.04), rgba(167, 139, 250, 0.04));
+      border: 2px solid rgba(45, 212, 191, 0.1);
       border-radius: 20px;
       padding: 2rem 2.5rem;
       margin: 1.5rem 0;
       text-align: center;
     }
     .question-box .q {
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       font-weight: 600;
       color: #c4b5fd;
       font-family: var(--font-heading);
       line-height: 1.4;
     }
 
-    /* ===== VERDICT CARDS ===== */
-    .verdict-grid {
+    /* ================================================================
+       RADAR VERDICT
+       ================================================================ */
+    .radar-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
       margin: 1.5rem 0;
     }
-    .verdict-card {
+    .radar-card {
       background: var(--bg-card);
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.04);
       border-radius: 14px;
       padding: 1.5rem;
       text-align: center;
     }
-    .verdict-card .stars { color: var(--amber); font-size: 1.1rem; letter-spacing: 2px; }
-    @media (max-width: 768px) { .verdict-grid { grid-template-columns: 1fr; } }
+    .radar-card .score {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin: 0.3rem 0;
+    }
+    .radar-card .label { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
+    .radar-card .desc { color: var(--text-muted); font-size: 0.85rem; margin-top: 0.3rem; }
+    .radar-card .bars { display: flex; justify-content: center; gap: 6px; margin-top: 0.5rem; }
+    .radar-card .bars .bar { width: 20px; height: 6px; border-radius: 4px; background: rgba(255,255,255,0.06); }
+    .radar-card .bars .bar.fill { background: var(--teal); }
+    .radar-card.b2 .bars .bar.fill { background: var(--amber); }
+    .radar-card.b3 .bars .bar.fill { background: var(--rose); }
+    @media (max-width: 768px) { .radar-grid { grid-template-columns: 1fr; } }
 
-    /* ===== FOOTER ===== */
+    /* ================================================================
+       FOOTER
+       ================================================================ */
     footer {
       text-align: center;
       padding: 2rem;
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      border-top: 1px solid rgba(255,255,255,0.04);
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      border-top: 1px solid rgba(255,255,255,0.03);
     }
 
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 768px) {
-      h1 { font-size: 2.5rem; }
-      h2 { font-size: 1.8rem; }
-      .hero h1 { font-size: 2.8rem; }
-      .floating-nav { top: 10px; padding: 0.2rem 0.5rem; gap: 0.2rem; }
-      .floating-nav a { font-size: 0.55rem; padding: 0.2rem 0.5rem; }
-      section { padding: 3rem 1.2rem; }
-      .question-box .q { font-size: 1.1rem; }
-      .paper-card .paper-header { flex-direction: column; }
+    /* ================================================================
+       MISC
+       ================================================================ */
+    .gap-text {
+      background: var(--bg-card);
+      padding: 1.5rem 2rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+      border-left: 3px solid var(--purple);
     }
+    .gap-text ul { list-style: none; padding-left: 1.5rem; }
+    .gap-text ul li { padding: 0.2rem 0; color: var(--text-muted); font-size: 0.95rem; }
+    .gap-text ul li strong { color: #fff; }
 
     [data-aos] { pointer-events: none; }
     [data-aos].aos-animate { pointer-events: auto; }
@@ -407,15 +466,14 @@
   <!-- ===== PROGRESS BAR ===== -->
   <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
 
-  <!-- ===== FLOATING NAV ===== -->
-  <nav class="floating-nav">
-    <a href="#intro"><i class="fas fa-home"></i></a>
-    <a href="#paper1">P1</a>
-    <a href="#paper2">P2</a>
-    <a href="#paper3">P3</a>
-    <a href="#gap">Gap</a>
-    <a href="#question">Q</a>
-    <a href="#verdict"><i class="fas fa-trophy"></i></a>
+  <!-- ===== SIDEBAR NAV ===== -->
+  <nav class="sidebar">
+    <a href="#intro" class="active"><span class="dot"></span> Intro</a>
+    <a href="#papers"><span class="dot"></span> Papers</a>
+    <a href="#compare"><span class="dot"></span> Compare</a>
+    <a href="#gap"><span class="dot"></span> Gap</a>
+    <a href="#question"><span class="dot"></span> Question</a>
+    <a href="#verdict"><span class="dot"></span> Verdict</a>
   </nav>
 
   <!-- ================================================================ -->
@@ -424,430 +482,293 @@
   <section class="hero" id="intro">
     <canvas id="particle-canvas"></canvas>
     <div class="container hero-content">
-      <div style="color: var(--cyan); font-weight: 600; letter-spacing: 0.12em; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 0.3rem;">Aerosol Nanotechnology · Three Papers</div>
-      <h1>Three Papers. One Goal.</h1>
-      <p class="sub">Three research teams. Three strategies. One shared mission —<br>print electronics, sensors, and 3D structures with aerosol precision.</p>
-      <div class="tagline">
-        <span>P1 · Wilkinson &amp; Smith 2019</span>
-        <span>P2 · Hwang &amp; Choi 2024</span>
-        <span>P3 · Jung &amp; Choi 2019</span>
+      <div class="badge-row">
+        <span><i class="fas fa-file-alt"></i> P1 · Wilkinson &amp; Smith 2019</span>
+        <span><i class="fas fa-flask"></i> P2 · Hwang &amp; Choi 2024</span>
+        <span><i class="fas fa-microchip"></i> P3 · Jung &amp; Choi 2019</span>
       </div>
+      <h1>
+        <span class="highlight-teal">Three</span> Papers.<br>
+        <span class="highlight-amber">One</span> Mission.
+      </h1>
+      <p class="sub">Three research teams. Three distinct strategies. One shared mission — <br>print electronics, sensors, and 3D structures with aerosol precision.</p>
       <div class="scroll-hint"><i class="fas fa-chevron-down"></i> Scroll to explore</div>
     </div>
   </section>
 
   <!-- ================================================================ -->
-  <!-- SECTION 1: WHAT EACH PAPER ACTUALLY DOES -->
+  <!-- SECTION: PAPERS (TABS) -->
   <!-- ================================================================ -->
-  <section id="mechanisms" data-aos="fade-up">
+  <section id="papers">
     <div class="container">
-      <div class="section-label">Section 01 · Visual mechanisms</div>
-      <h2>What each paper actually does</h2>
-      <p class="text-muted" style="max-width:700px;">Each diagram shows one paper's core mechanism. Watch all three — the differences become obvious.</p>
+      <div class="section-tag">Section 01 · The three papers</div>
+      <h2>Each paper. One mechanism.</h2>
+      <p class="text-muted" style="max-width:700px;">Click a tab to see the core idea, key results, and limitations of each paper.</p>
 
-      <!-- PAPER 1 DIAGRAM -->
-      <div class="diagram-container" data-aos="fade-up">
-        <h4 style="color:var(--cyan);">Paper 1 · Wilkinson &amp; Smith 2019 — AJP Process</h4>
-        <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" style="max-width:750px; width:100%; height:auto;">
-          <rect x="20" y="130" width="90" height="60" rx="6" fill="none" stroke="#06b6d4" stroke-width="2"/>
-          <text x="65" y="170" font-family="Inter" font-size="13" fill="#e2e8f0" text-anchor="middle">Atomizer</text>
-          <text x="65" y="188" font-family="Inter" font-size="10" fill="#94a3b8" text-anchor="middle">(Ultrasonic/Pneumatic)</text>
-          <circle cx="130" cy="150" r="7" fill="#06b6d4" opacity="0.9"/>
-          <circle cx="148" cy="165" r="5" fill="#06b6d4" opacity="0.7"/>
-          <circle cx="165" cy="140" r="6" fill="#06b6d4" opacity="0.8"/>
-          <line x1="20" y1="110" x2="230" y2="110" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 4"/>
-          <text x="110" y="100" font-family="Inter" font-size="11" fill="#f59e0b" text-anchor="middle">Carrier Gas Flow</text>
-          <rect x="210" y="130" width="90" height="60" rx="6" fill="none" stroke="#a78bfa" stroke-width="2"/>
-          <text x="255" y="168" font-family="Inter" font-size="13" fill="#e2e8f0" text-anchor="middle">Virtual</text>
-          <text x="255" y="186" font-family="Inter" font-size="10" fill="#94a3b8" text-anchor="middle">Impactor</text>
-          <line x1="340" y1="80" x2="340" y2="220" stroke="#10b981" stroke-width="2" stroke-dasharray="6 4"/>
-          <text x="365" y="155" font-family="Inter" font-size="12" fill="#10b981">Sheath Gas</text>
-          <rect x="380" y="130" width="110" height="60" rx="6" fill="none" stroke="#06b6d4" stroke-width="2"/>
-          <text x="435" y="162" font-family="Inter" font-size="13" fill="#e2e8f0" text-anchor="middle">Deposition Head</text>
-          <text x="435" y="182" font-family="Inter" font-size="10" fill="#94a3b8" text-anchor="middle">(Coaxial Nozzle)</text>
-          <path d="M435 190 L435 265 L455 265 L455 190" fill="none" stroke="#06b6d4" stroke-width="2.5" opacity="0.7"/>
-          <path d="M435 190 L435 265 L415 265 L415 190" fill="none" stroke="#06b6d4" stroke-width="2.5" opacity="0.7"/>
-          <text x="450" y="280" font-family="Inter" font-size="12" fill="#06b6d4" font-weight="600">Focused Aerosol</text>
-          <rect x="370" y="275" width="180" height="20" rx="4" fill="#334155"/>
-          <text x="460" y="310" font-family="Inter" font-size="13" fill="#94a3b8" text-anchor="middle">Substrate (1–5 mm stand‑off)</text>
-          <text x="20" y="30" font-family="Inter" font-size="14" fill="#06b6d4" font-weight="600">①</text>
-          <text x="30" y="50" font-family="Inter" font-size="11" fill="#94a3b8">Atomization</text>
-          <text x="210" y="30" font-family="Inter" font-size="14" fill="#a78bfa" font-weight="600">②</text>
-          <text x="220" y="50" font-family="Inter" font-size="11" fill="#94a3b8">Size Selection</text>
-          <text x="380" y="30" font-family="Inter" font-size="14" fill="#10b981" font-weight="600">③</text>
-          <text x="390" y="50" font-family="Inter" font-size="11" fill="#94a3b8">Focusing &amp; Deposition</text>
-        </svg>
-        <div class="diagram-caption">① Liquid atomization → ② Droplet size selection (Virtual Impactor) → ③ Sheath gas focusing & coaxial deposition</div>
-      </div>
-
-      <!-- PAPER 2 DIAGRAM -->
-      <div class="diagram-container" data-aos="fade-up">
-        <h4 style="color:var(--emerald);">Paper 2 · Hwang &amp; Choi 2024 — Mid‑Air Blending</h4>
-        <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" style="max-width:600px; width:100%; height:auto;">
-          <rect x="30" y="40" width="120" height="60" rx="8" fill="none" stroke="#10b981" stroke-width="2"/>
-          <text x="90" y="75" font-family="Inter" font-size="12" fill="#e2e8f0" text-anchor="middle">Polymer Aerosol</text>
-          <circle cx="60" cy="55" r="6" fill="#10b981" opacity="0.7"/>
-          <circle cx="80" cy="70" r="5" fill="#10b981" opacity="0.6"/>
-          <circle cx="100" cy="50" r="7" fill="#10b981" opacity="0.8"/>
-
-          <rect x="30" y="150" width="120" height="60" rx="8" fill="none" stroke="#10b981" stroke-width="2"/>
-          <text x="90" y="185" font-family="Inter" font-size="12" fill="#e2e8f0" text-anchor="middle">NP Aerosol (Ag)</text>
-          <circle cx="60" cy="165" r="5" fill="#f472b6" opacity="0.8"/>
-          <circle cx="80" cy="180" r="6" fill="#f472b6" opacity="0.7"/>
-          <circle cx="100" cy="160" r="5" fill="#f472b6" opacity="0.9"/>
-
-          <path d="M150 70 L280 70 L280 130 L300 130" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 4"/>
-          <path d="M150 180 L280 180 L280 130 L300 130" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 4"/>
-          <text x="260" y="155" font-family="Inter" font-size="11" fill="#f59e0b" text-anchor="middle">Mix at Printhead</text>
-
-          <rect x="300" y="110" width="60" height="40" rx="6" fill="none" stroke="#06b6d4" stroke-width="2"/>
-          <text x="330" y="135" font-family="Inter" font-size="11" fill="#e2e8f0" text-anchor="middle">Nozzle</text>
-
-          <rect x="380" y="190" width="180" height="30" rx="4" fill="#334155"/>
-          <text x="470" y="210" font-family="Inter" font-size="12" fill="#94a3b8" text-anchor="middle">Substrate</text>
-
-          <circle cx="350" cy="185" r="6" fill="#10b981" opacity="0.8"/>
-          <circle cx="360" cy="195" r="5" fill="#f472b6" opacity="0.9"/>
-          <circle cx="370" cy="180" r="7" fill="#10b981" opacity="0.7"/>
-          <circle cx="380" cy="200" r="5" fill="#f472b6" opacity="0.8"/>
-          <circle cx="390" cy="185" r="6" fill="#10b981" opacity="0.9"/>
-          <circle cx="400" cy="195" r="5" fill="#f472b6" opacity="0.7"/>
-
-          <text x="470" y="240" font-family="Inter" font-size="12" fill="#10b981" font-weight="600">Perfect Dispersion</text>
-        </svg>
-        <div class="diagram-caption">Separate atomization of polymer and nanoparticles → combined only at the printhead → perfect dispersion with zero agglomeration</div>
-      </div>
-
-      <!-- PAPER 3 DIAGRAM -->
-      <div class="diagram-container" data-aos="fade-up">
-        <h4 style="color:var(--amber);">Paper 3 · Jung &amp; Choi 2019 — Electrostatic Focusing</h4>
-        <div style="display:flex; flex-direction:column; align-items:center; gap:6px; padding:0.5rem; max-width:500px; margin:0 auto;">
-          <div style="display:flex; align-items:center; gap:12px; padding:8px 16px; border-radius:10px; border:2px solid #f59e0b; background:rgba(245,158,11,0.06); width:100%; justify-content:center;">
-            <span style="font-size:1.4rem;">⚡</span>
-            <span style="font-weight:600; color:#f59e0b;">ION CUSHION (Positive Charge)</span>
-          </div>
-          <div style="font-size:1.2rem; color:#64748b;">↓</div>
-          <div style="display:flex; align-items:center; gap:12px; padding:8px 16px; border-radius:10px; border:2px solid #f59e0b; background:rgba(245,158,11,0.04); width:100%; justify-content:center;">
-            <span style="font-size:1.2rem;">⬜</span>
-            <span style="font-weight:600; color:#e2e8f0;">Floating Dielectric Mask (SiN<sub>x</sub>)</span>
-            <span style="display:inline-block; width:28px; height:28px; border-radius:50%; border:2px solid #f59e0b; background:#0b0b12;"></span>
-          </div>
-          <div style="font-size:1.2rem; color:#64748b;">↓</div>
-          <div style="display:flex; flex-direction:column; align-items:center; gap:4px; padding:8px 16px; border-radius:10px; border:2px solid #06b6d4; background:rgba(6,182,212,0.05); width:100%;">
-            <span style="font-weight:600; color:#06b6d4;"><i class="fas fa-bolt"></i> Electric Field Focusing</span>
-            <div style="display:flex; gap:16px; justify-content:center;">
-              <div style="width:3px; height:28px; background:#06b6d4; opacity:0.5; border-radius:4px; position:relative;"><span style="position:absolute; width:10px; height:10px; border-radius:50%; background:#f472b6; top:-4px; left:-3.5px; box-shadow:0 0 12px #f472b6;"></span></div>
-              <div style="width:3px; height:28px; background:#06b6d4; opacity:0.5; border-radius:4px; position:relative;"><span style="position:absolute; width:10px; height:10px; border-radius:50%; background:#f472b6; top:-4px; left:-3.5px; box-shadow:0 0 12px #f472b6;"></span></div>
-              <div style="width:3px; height:28px; background:#06b6d4; opacity:0.5; border-radius:4px; position:relative;"><span style="position:absolute; width:10px; height:10px; border-radius:50%; background:#f472b6; top:-4px; left:-3.5px; box-shadow:0 0 12px #f472b6;"></span></div>
-            </div>
-            <span style="color:#f472b6; font-size:0.7rem;">⬆️ Charged nanoparticles follow field lines</span>
-          </div>
-          <div style="font-size:1.2rem; color:#64748b;">↓</div>
-          <div style="display:flex; align-items:center; gap:12px; padding:8px 16px; border-radius:10px; border:2px solid #06b6d4; background:rgba(6,182,212,0.06); width:100%; justify-content:center;">
-            <span style="font-size:1.4rem;">🏗️</span>
-            <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
-              <div style="width:40px; height:45px; background:linear-gradient(to bottom, #06b6d4, #10b981); border-radius:6px 6px 0 0; border:2px solid #06b6d4;"></div>
-              <span style="font-weight:700; color:#06b6d4; font-size:0.9rem;">GROWING 3D NANOPILLAR</span>
-            </div>
-          </div>
-          <div style="font-size:1.2rem; color:#64748b;">↓</div>
-          <div style="display:flex; align-items:center; gap:12px; padding:6px 16px; border-radius:10px; border:2px solid #334155; background:rgba(51,65,85,0.15); width:100%; justify-content:center;">
-            <span style="font-size:1rem;">▬</span>
-            <span style="color:#94a3b8;">Substrate</span>
-            <div style="width:60%; height:14px; background:#334155; border-radius:4px;"></div>
-          </div>
-        </div>
-        <div class="diagram-caption">Ion cushion creates an electrostatic lens → charged nanoparticles focus through the mask hole → growing 3D nanopillar (&lt; 100 nm resolution)</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================================================================ -->
-  <!-- SECTION 2: THE 3-LEVEL STRATEGY -->
-  <!-- ================================================================ -->
-  <section id="papers" data-aos="fade-up">
-    <div class="container">
-      <div class="section-label">Section 02 · The core method</div>
-      <h2>The 3-Level Strategy</h2>
-      <p class="text-muted" style="max-width:700px;">Every paper is read three times, each pass deeper than the last. Each level has one job and answers one question.</p>
-      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin:1.5rem 0;">
-        <div style="background:var(--bg-card); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:1.2rem; text-align:center;">
-          <div style="font-weight:700; color:var(--cyan); font-size:1.8rem;">L1</div>
-          <div style="font-weight:600;">Scan</div>
-          <div style="color:var(--text-muted); font-size:0.8rem;">Title · Abstract · Figures · Conclusion</div>
-          <div style="color:var(--text-muted); font-size:0.8rem; margin-top:0.3rem; font-style:italic;">"What does this paper do — in one sentence?"</div>
-        </div>
-        <div style="background:var(--bg-card); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:1.2rem; text-align:center;">
-          <div style="font-weight:700; color:var(--emerald); font-size:1.8rem;">L2</div>
-          <div style="font-weight:600;">Understand</div>
-          <div style="color:var(--text-muted); font-size:0.8rem;">Introduction · Results · Key numbers</div>
-          <div style="color:var(--text-muted); font-size:0.8rem; margin-top:0.3rem; font-style:italic;">"What problem does it solve — and what are the key results?"</div>
-        </div>
-        <div style="background:var(--bg-card); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:1.2rem; text-align:center;">
-          <div style="font-weight:700; color:var(--amber); font-size:1.8rem;">L3</div>
-          <div style="font-weight:600;">Deep Dive</div>
-          <div style="color:var(--text-muted); font-size:0.8rem;">Full Methods · Supplementary · Discussion</div>
-          <div style="color:var(--text-muted); font-size:0.8rem; margin-top:0.3rem; font-style:italic;">"Exactly how did they build it — and what did they not test?"</div>
-        </div>
+      <div class="paper-tabs">
+        <button class="active" data-paper="1" onclick="switchPaper(1)">📄 Paper 1 · Wilkinson</button>
+        <button data-paper="2" onclick="switchPaper(2)">🧪 Paper 2 · Hwang</button>
+        <button data-paper="3" onclick="switchPaper(3)">⚡ Paper 3 · Jung</button>
       </div>
 
       <!-- PAPER 1 -->
-      <div class="paper-card" data-aos="fade-up">
-        <div class="paper-header">
-          <h3 style="color:var(--cyan);">Paper 1 · Wilkinson &amp; Smith 2019</h3>
-          <span class="paper-meta">A review of aerosol jet printing — Int J Adv Manuf Technol</span>
+      <div class="paper-panel active" id="panel-1">
+        <div class="diagram-container">
+          <h4 style="color:var(--teal);">AJP Process · Wilkinson &amp; Smith 2019</h4>
+          <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" style="max-width:750px; width:100%; height:auto;">
+            <rect x="20" y="130" width="90" height="60" rx="6" fill="none" stroke="#2dd4bf" stroke-width="2"/>
+            <text x="65" y="170" font-family="Inter" font-size="13" fill="#e2e8f0" text-anchor="middle">Atomizer</text>
+            <text x="65" y="188" font-family="Inter" font-size="10" fill="#8892a8" text-anchor="middle">(Ultrasonic/Pneumatic)</text>
+            <circle cx="130" cy="150" r="7" fill="#2dd4bf" opacity="0.9"/>
+            <circle cx="148" cy="165" r="5" fill="#2dd4bf" opacity="0.7"/>
+            <circle cx="165" cy="140" r="6" fill="#2dd4bf" opacity="0.8"/>
+            <line x1="20" y1="110" x2="230" y2="110" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 4"/>
+            <text x="110" y="100" font-family="Inter" font-size="11" fill="#f59e0b" text-anchor="middle">Carrier Gas Flow</text>
+            <rect x="210" y="130" width="90" height="60" rx="6" fill="none" stroke="#a78bfa" stroke-width="2"/>
+            <text x="255" y="168" font-family="Inter" font-size="13" fill="#e2e8f0" text-anchor="middle">Virtual</text>
+            <text x="255" y="186" font-family="Inter" font-size="10" fill="#8892a8" text-anchor="middle">Impactor</text>
+            <line x1="340" y1="80" x2="340" y2="220" stroke="#2dd4bf" stroke-width="2" stroke-dasharray="6 4"/>
+            <text x="365" y="155" font-family="Inter" font-size="12" fill="#2dd4bf">Sheath Gas</text>
+            <rect x="380" y="130" width="110" height="60" rx="6" fill="none" stroke="#2dd4bf" stroke-width="2"/>
+            <text x="435" y="162" font-family="Inter" font-size="13" fill="#e2e8f0" text-anchor="middle">Deposition Head</text>
+            <text x="435" y="182" font-family="Inter" font-size="10" fill="#8892a8" text-anchor="middle">(Coaxial Nozzle)</text>
+            <path d="M435 190 L435 265 L455 265 L455 190" fill="none" stroke="#2dd4bf" stroke-width="2.5" opacity="0.7"/>
+            <path d="M435 190 L435 265 L415 265 L415 190" fill="none" stroke="#2dd4bf" stroke-width="2.5" opacity="0.7"/>
+            <text x="450" y="280" font-family="Inter" font-size="12" fill="#2dd4bf" font-weight="600">Focused Aerosol</text>
+            <rect x="370" y="275" width="180" height="20" rx="4" fill="#334155"/>
+            <text x="460" y="310" font-family="Inter" font-size="13" fill="#8892a8" text-anchor="middle">Substrate (1–5 mm stand‑off)</text>
+            <text x="20" y="30" font-family="Inter" font-size="14" fill="#2dd4bf" font-weight="600">①</text>
+            <text x="30" y="50" font-family="Inter" font-size="11" fill="#8892a8">Atomization</text>
+            <text x="210" y="30" font-family="Inter" font-size="14" fill="#a78bfa" font-weight="600">②</text>
+            <text x="220" y="50" font-family="Inter" font-size="11" fill="#8892a8">Size Selection</text>
+            <text x="380" y="30" font-family="Inter" font-size="14" fill="#2dd4bf" font-weight="600">③</text>
+            <text x="390" y="50" font-family="Inter" font-size="11" fill="#8892a8">Focusing &amp; Deposition</text>
+          </svg>
+          <div class="diagram-caption">① Atomization → ② Droplet size selection → ③ Sheath gas focusing & deposition</div>
         </div>
-        <div style="color:var(--text-muted); margin-bottom:0.5rem;">▸ A comprehensive review of AJP fundamentals: atomization, focusing, deposition, and applications. Establishes the baseline for aerosol-based manufacturing.</div>
-        <div class="level open" onclick="toggleLevel(this)">
-          <div class="level-label"><span>L1 · Scan</span> <span style="color:var(--text-muted); font-weight:400; font-size:0.7rem;">click to expand</span></div>
-          <div class="level-content"><strong>What it does — in one sentence:</strong> AJP is a non-contact direct-write technique that uses an aerosol mist to print fine features (down to ~10 µm) on almost any substrate, from flat glass to curved golf balls.</div>
-        </div>
-        <div class="level" onclick="toggleLevel(this)">
-          <div class="level-label"><span>L2 · Understand</span> <span style="color:var(--text-muted); font-weight:400; font-size:0.7rem;">click to expand</span></div>
-          <div class="level-content">
-            <strong>The problem it solves:</strong> How to deposit materials with high resolution on complex, non-planar surfaces without physical contact.<br><br>
-            <strong>Key results:</strong>
-            <ul style="padding-left:1.2rem; margin-top:0.3rem;">
-              <li>Two atomization methods: Ultrasonic (1–10 cP, monodisperse) and Pneumatic (1–1000 cP, polydisperse, requires Virtual Impactor)</li>
-              <li>Sheath gas focusing enables 1–5 mm stand-off distance → conformal printing on curved surfaces</li>
-              <li>Finest reported lines: ~10 µm (Cai et al.)</li>
-              <li>Resistances ~2× bulk silver; bending endurance &lt; 10,000 cycles</li>
-              <li>Materials: silver, ceramics, SU‑8, proteins, DNA</li>
-            </ul>
-          </div>
-        </div>
-        <div class="level" onclick="toggleLevel(this)">
-          <div class="level-label"><span>L3 · Deep Dive</span> <span style="color:var(--text-muted); font-weight:400; font-size:0.7rem;">click to expand</span></div>
-          <div class="level-content">
-            <strong>Mechanism:</strong> Ink → atomized into droplets → carrier gas transports → Virtual Impactor filters large droplets → sheath gas focuses the stream → deposited through coaxial nozzle.<br><br>
-            <strong>What they didn't test:</strong> The review is comprehensive but does not propose new materials or processes — it synthesises existing work. The key open challenge: no universal "Z‑number" for ink formulation, unlike inkjet printing. Overspray control remains empirical.
-          </div>
+        <div class="panel-grid">
+          <div class="panel-item"><div class="label">Core Idea</div><div class="value">Non‑contact direct‑write using aerosol mist — 1–5 mm stand‑off enables conformal printing on curved surfaces</div></div>
+          <div class="panel-item"><div class="label">Key Results</div><div class="value">~10 µm finest lines · ~2× bulk silver resistance · &lt; 10,000 bending cycles</div></div>
+          <div class="panel-item"><div class="label">Materials</div><div class="value">Silver, ceramics, SU‑8, proteins, DNA — extremely wide compatibility</div></div>
+          <div class="panel-item"><div class="label">Limitation</div><div class="value">Overspray · Empirical ink formulation (no universal "Z‑number")</div></div>
         </div>
       </div>
 
       <!-- PAPER 2 -->
-      <div class="paper-card" data-aos="fade-up">
-        <div class="paper-header">
-          <h3 style="color:var(--emerald);">Paper 2 · Hwang &amp; Choi 2024</h3>
-          <span class="paper-meta">Highly dispersed nanomaterials via AM3D printing — Nano Energy</span>
+      <div class="paper-panel" id="panel-2">
+        <div class="diagram-container">
+          <h4 style="color:var(--amber);">Mid‑Air Blending · Hwang &amp; Choi 2024</h4>
+          <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" style="max-width:600px; width:100%; height:auto;">
+            <rect x="30" y="40" width="120" height="60" rx="8" fill="none" stroke="#f59e0b" stroke-width="2"/>
+            <text x="90" y="75" font-family="Inter" font-size="12" fill="#e2e8f0" text-anchor="middle">Polymer Aerosol</text>
+            <circle cx="60" cy="55" r="6" fill="#f59e0b" opacity="0.7"/>
+            <circle cx="80" cy="70" r="5" fill="#f59e0b" opacity="0.6"/>
+            <circle cx="100" cy="50" r="7" fill="#f59e0b" opacity="0.8"/>
+            <rect x="30" y="150" width="120" height="60" rx="8" fill="none" stroke="#f59e0b" stroke-width="2"/>
+            <text x="90" y="185" font-family="Inter" font-size="12" fill="#e2e8f0" text-anchor="middle">NP Aerosol (Ag)</text>
+            <circle cx="60" cy="165" r="5" fill="#f472b6" opacity="0.8"/>
+            <circle cx="80" cy="180" r="6" fill="#f472b6" opacity="0.7"/>
+            <circle cx="100" cy="160" r="5" fill="#f472b6" opacity="0.9"/>
+            <path d="M150 70 L280 70 L280 130 L300 130" fill="none" stroke="#2dd4bf" stroke-width="2" stroke-dasharray="4 4"/>
+            <path d="M150 180 L280 180 L280 130 L300 130" fill="none" stroke="#2dd4bf" stroke-width="2" stroke-dasharray="4 4"/>
+            <text x="260" y="155" font-family="Inter" font-size="11" fill="#2dd4bf" text-anchor="middle">Mix at Printhead</text>
+            <rect x="300" y="110" width="60" height="40" rx="6" fill="none" stroke="#2dd4bf" stroke-width="2"/>
+            <text x="330" y="135" font-family="Inter" font-size="11" fill="#e2e8f0" text-anchor="middle">Nozzle</text>
+            <rect x="380" y="190" width="180" height="30" rx="4" fill="#334155"/>
+            <text x="470" y="210" font-family="Inter" font-size="12" fill="#8892a8" text-anchor="middle">Substrate</text>
+            <circle cx="350" cy="185" r="6" fill="#f59e0b" opacity="0.8"/>
+            <circle cx="360" cy="195" r="5" fill="#f472b6" opacity="0.9"/>
+            <circle cx="370" cy="180" r="7" fill="#f59e0b" opacity="0.7"/>
+            <circle cx="380" cy="200" r="5" fill="#f472b6" opacity="0.8"/>
+            <circle cx="390" cy="185" r="6" fill="#f59e0b" opacity="0.9"/>
+            <circle cx="400" cy="195" r="5" fill="#f472b6" opacity="0.7"/>
+            <text x="470" y="240" font-family="Inter" font-size="12" fill="#f59e0b" font-weight="600">Perfect Dispersion</text>
+          </svg>
+          <div class="diagram-caption">Separate atomization → combined at printhead → perfect dispersion with zero agglomeration</div>
         </div>
-        <div style="color:var(--text-muted); margin-bottom:0.5rem;">▸ Solves the 60‑year dispersion problem by atomizing polymer and nanoparticles separately — combining them only at the printhead.</div>
-        <div class="level open" onclick="toggleLevel(this)">
-          <div class="level-label"><span>L1 · Scan</span> <span style="color:var(--text-muted); font-weight:400; font-size:0.7rem;">click to expand</span></div>
-          <div class="level-content"><strong>What it does — in one sentence:</strong> AM3D printing achieves perfect nanomaterial dispersion in a polymer matrix by atomizing the polymer and nanoparticles separately and blending them in mid-air just before deposition.</div>
-        </div>
-        <div class="level" onclick="toggleLevel(this)">
-          <div class="level-label"><span>L2 · Understand</span> <span style="color:var(--text-muted); font-weight:400; font-size:0.7rem;">click to expand</span></div>
-          <div class="level-content">
-            <strong>The problem it solves:</strong> For 60 years, nanoparticles have clumped together in polymer matrices (agglomeration), creating weak spots and electrical leakage.<br><br>
-            <strong>Key results:</strong>
-            <ul style="padding-left:1.2rem; margin-top:0.3rem;">
-              <li><strong>Inspired by graffiti art:</strong> separate atomization of polymer and Ag nanoparticles</li>
-              <li>Numerical simulation (Euler‑Lagrangian) identified 114° junction angle for optimal isotropic mixing</li>
-              <li>SEM shows <strong>zero agglomeration</strong> — perfect dispersion</li>
-              <li>Dielectric constant (ε′): pure PVDF‑TrFE = 14; nanocomposite = <strong>28</strong> (2× improvement)</li>
-              <li>Multi‑layer structures achieved <strong>16×</strong> higher ε′ with low loss tangent</li>
-              <li>TENG output: 80V → ~90V</li>
-            </ul>
-          </div>
-        </div>
-        <div class="level" onclick="toggleLevel(this)">
-          <div class="level-label"><span>L3 · Deep Dive</span> <span style="color:var(--text-muted); font-weight:400; font-size:0.7rem;">click to expand</span></div>
-          <div class="level-content">
-            <strong>Mechanism:</strong> Pneumatic atomizer (PA) for polymer solution + Ultrasonic atomizer (UA) for nanoparticle suspension → separate aerosol streams → combined at 114° Y‑junction printhead → deposited as nanocomposite.<br><br>
-            <strong>What they didn't test:</strong> The technique is demonstrated with Ag nanoparticles in PI and PVDF‑TrFE matrices. It has not been tested with other nanoparticle types (e.g., carbon nanotubes, quantum dots) or in large‑scale industrial settings. Resolution remains micro‑scale — no true 3D nano‑structuring.
-          </div>
+        <div class="panel-grid">
+          <div class="panel-item"><div class="label">Core Idea</div><div class="value">Inspired by graffiti art — atomize polymer and nanoparticles separately, combine only at the printhead</div></div>
+          <div class="panel-item"><div class="label">Key Results</div><div class="value">ε′: 14 → <strong>28</strong> (2×) · Multi‑layer: <strong>16×</strong> improvement · TENG: 80V → ~90V</div></div>
+          <div class="panel-item"><div class="label">Materials</div><div class="value">PVDF‑TrFE + Ag nanoparticles · PI + Ag nanoparticles</div></div>
+          <div class="panel-item"><div class="label">Limitation</div><div class="value">Micro‑scale only · Limited to Ag nanoparticles · No true 3D nano‑structuring</div></div>
         </div>
       </div>
 
       <!-- PAPER 3 -->
-      <div class="paper-card" data-aos="fade-up">
-        <div class="paper-header">
-          <h3 style="color:var(--amber);">Paper 3 · Jung &amp; Choi 2019</h3>
-          <span class="paper-meta">3D nanoprinting via charged aerosol focusing — Science (preprint)</span>
-        </div>
-        <div style="color:var(--text-muted); margin-bottom:0.5rem;">▸ Uses electrostatic fields to guide charged nanoparticles into true 3D structures at sub‑100 nm resolution.</div>
-        <div class="level open" onclick="toggleLevel(this)">
-          <div class="level-label"><span>L1 · Scan</span> <span style="color:var(--text-muted); font-weight:400; font-size:0.7rem;">click to expand</span></div>
-          <div class="level-content"><strong>What it does — in one sentence:</strong> Ion‑Assisted Aerosol Lithography (IAAL) uses an electrostatic lens to focus charged nanoparticles through a mask, building 3D nanopillars, helices, and complex structures with sub‑100 nm resolution.</div>
-        </div>
-        <div class="level" onclick="toggleLevel(this)">
-          <div class="level-label"><span>L2 · Understand</span> <span style="color:var(--text-muted); font-weight:400; font-size:0.7rem;">click to expand</span></div>
-          <div class="level-content">
-            <strong>The problem it solves:</strong> How to print true 3D structures at the nanoscale with high precision and material flexibility.<br><br>
-            <strong>Key results:</strong>
-            <ul style="padding-left:1.2rem; margin-top:0.3rem;">
-              <li><strong>Electrostatic focusing:</strong> positive ions accumulate on a floating mask → create a charged cushion → form narrow funnels above holes</li>
-              <li>Two modes: <strong>Growth Mode</strong> (slow stage → pillars, helices) and <strong>Writing Mode</strong> (fast stage → brush‑like deposition)</li>
-              <li>Resolution: <strong>&lt; 100 nm</strong> — 100× smaller than conventional AJP (~10 µm)</li>
-              <li>Multi‑material switching: Pd and Cu in the same structure</li>
-              <li>Fabricated helices (1 µm radius), zig‑zags, stairs, and letters "3D"</li>
-            </ul>
+      <div class="paper-panel" id="panel-3">
+        <div class="diagram-container">
+          <h4 style="color:var(--rose);">Electrostatic Focusing · Jung &amp; Choi 2019</h4>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:6px; padding:0.5rem; max-width:500px; margin:0 auto;">
+            <div style="display:flex; align-items:center; gap:12px; padding:8px 16px; border-radius:10px; border:2px solid #f472b6; background:rgba(244,114,182,0.06); width:100%; justify-content:center;">
+              <span style="font-size:1.4rem;">⚡</span>
+              <span style="font-weight:600; color:#f472b6;">ION CUSHION (Positive Charge)</span>
+            </div>
+            <div style="font-size:1.2rem; color:#5a6478;">↓</div>
+            <div style="display:flex; align-items:center; gap:12px; padding:8px 16px; border-radius:10px; border:2px solid #f472b6; background:rgba(244,114,182,0.04); width:100%; justify-content:center;">
+              <span style="font-size:1.2rem;">⬜</span>
+              <span style="font-weight:600; color:#e2e8f0;">Floating Dielectric Mask (SiN<sub>x</sub>)</span>
+              <span style="display:inline-block; width:28px; height:28px; border-radius:50%; border:2px solid #f472b6; background:#0b0e1a;"></span>
+            </div>
+            <div style="font-size:1.2rem; color:#5a6478;">↓</div>
+            <div style="display:flex; flex-direction:column; align-items:center; gap:4px; padding:8px 16px; border-radius:10px; border:2px solid #2dd4bf; background:rgba(45,212,191,0.05); width:100%;">
+              <span style="font-weight:600; color:#2dd4bf;"><i class="fas fa-bolt"></i> Electric Field Focusing</span>
+              <div style="display:flex; gap:16px; justify-content:center;">
+                <div style="width:3px; height:28px; background:#2dd4bf; opacity:0.5; border-radius:4px; position:relative;"><span style="position:absolute; width:10px; height:10px; border-radius:50%; background:#f472b6; top:-4px; left:-3.5px; box-shadow:0 0 12px #f472b6;"></span></div>
+                <div style="width:3px; height:28px; background:#2dd4bf; opacity:0.5; border-radius:4px; position:relative;"><span style="position:absolute; width:10px; height:10px; border-radius:50%; background:#f472b6; top:-4px; left:-3.5px; box-shadow:0 0 12px #f472b6;"></span></div>
+                <div style="width:3px; height:28px; background:#2dd4bf; opacity:0.5; border-radius:4px; position:relative;"><span style="position:absolute; width:10px; height:10px; border-radius:50%; background:#f472b6; top:-4px; left:-3.5px; box-shadow:0 0 12px #f472b6;"></span></div>
+              </div>
+              <span style="color:#f472b6; font-size:0.7rem;">⬆️ Charged nanoparticles follow field lines</span>
+            </div>
+            <div style="font-size:1.2rem; color:#5a6478;">↓</div>
+            <div style="display:flex; align-items:center; gap:12px; padding:8px 16px; border-radius:10px; border:2px solid #2dd4bf; background:rgba(45,212,191,0.06); width:100%; justify-content:center;">
+              <span style="font-size:1.4rem;">🏗️</span>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
+                <div style="width:40px; height:45px; background:linear-gradient(to bottom, #2dd4bf, #f59e0b); border-radius:6px 6px 0 0; border:2px solid #2dd4bf;"></div>
+                <span style="font-weight:700; color:#2dd4bf; font-size:0.9rem;">GROWING 3D NANOPILLAR</span>
+              </div>
+            </div>
+            <div style="font-size:1.2rem; color:#5a6478;">↓</div>
+            <div style="display:flex; align-items:center; gap:12px; padding:6px 16px; border-radius:10px; border:2px solid #334155; background:rgba(51,65,85,0.15); width:100%; justify-content:center;">
+              <span style="font-size:1rem;">▬</span>
+              <span style="color:#8892a8;">Substrate</span>
+              <div style="width:60%; height:14px; background:#334155; border-radius:4px;"></div>
+            </div>
           </div>
+          <div class="diagram-caption">Ion cushion → electrostatic lens → charged nanoparticles focus through mask hole → growing 3D nanopillar (&lt; 100 nm)</div>
         </div>
-        <div class="level" onclick="toggleLevel(this)">
-          <div class="level-label"><span>L3 · Deep Dive</span> <span style="color:var(--text-muted); font-weight:400; font-size:0.7rem;">click to expand</span></div>
-          <div class="level-content">
-            <strong>Mechanism:</strong> Spark discharge generates charged nanoparticles and ions → ions accumulate on the SiNₓ mask → electric field lines focus through 4 µm holes → charged particles follow field lines to the growing tip.<br><br>
-            <strong>What they didn't test:</strong> The technique is demonstrated only with <strong>single metals</strong> (Pd, Cu). It has not been extended to polymer composites or multi‑material blending. Growth speed is slow (~50 µm/h). No integration with in‑flight material blending.
-          </div>
+        <div class="panel-grid">
+          <div class="panel-item"><div class="label">Core Idea</div><div class="value">Electrostatic lens focuses charged nanoparticles through a floating mask — true 3D nano‑printing</div></div>
+          <div class="panel-item"><div class="label">Key Results</div><div class="value"><strong>&lt; 100 nm</strong> resolution · 100× smaller than AJP · Helices, zig‑zags, letters "3D"</div></div>
+          <div class="panel-item"><div class="label">Materials</div><div class="value">Pd (palladium) · Cu (copper) — multi‑material switching</div></div>
+          <div class="panel-item"><div class="label">Limitation</div><div class="value"><strong>Single‑metal only</strong> · No polymer composites · Slow growth (~50 µm/h)</div></div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ================================================================ -->
-  <!-- SECTION 3: COMPARISON TABLE -->
+  <!-- SECTION: COMPARE -->
   <!-- ================================================================ -->
-  <section id="comparison" data-aos="fade-up">
+  <section id="compare">
     <div class="container">
-      <div class="section-label">Section 03 · Side by side</div>
-      <h2>Build the comparison, one row at a time</h2>
-      <p class="text-muted" style="max-width:700px;">Every line is a fact pulled directly from the three papers.</p>
+      <div class="section-tag">Section 02 · Side by side</div>
+      <h2>Compare the three</h2>
+      <p class="text-muted" style="max-width:700px;">Every line is a fact pulled directly from the papers. The differences become obvious.</p>
 
-      <table class="comparison-table">
-        <thead>
-          <tr>
-            <th>Criterion</th>
-            <th>P1 · Wilkinson &amp; Smith 2019</th>
-            <th>P2 · Hwang &amp; Choi 2024</th>
-            <th>P3 · Jung &amp; Choi 2019</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Core Focus</strong></td>
-            <td>Review of AJP fundamentals</td>
-            <td>Multi‑material blending</td>
-            <td>3D nano‑printing</td>
-          </tr>
-          <tr>
-            <td><strong>Resolution</strong></td>
-            <td>~10 µm</td>
-            <td>Micro‑scale</td>
-            <td class="highlight">&lt; 100 nm</td>
-          </tr>
-          <tr>
-            <td><strong>Dimension</strong></td>
-            <td>2D / 2.5D</td>
-            <td>2D films + stacked 3D</td>
-            <td class="highlight">True 3D</td>
-          </tr>
-          <tr>
-            <td><strong>Materials</strong></td>
-            <td>Single‑material inks</td>
-            <td class="highlight">Polymer + NP blends</td>
-            <td>Single metals (Pd, Cu)</td>
-          </tr>
-          <tr>
-            <td><strong>Driving Force</strong></td>
-            <td>Gas flow</td>
-            <td>Dual‑gas atomization</td>
-            <td class="highlight">Electrostatic fields</td>
-          </tr>
-          <tr>
-            <td><strong>Key Innovation</strong></td>
-            <td>Sheath gas focusing</td>
-            <td>Separate atomization → no agglomeration</td>
-            <td>Ion‑induced electrostatic lens</td>
-          </tr>
-          <tr>
-            <td><strong>Key Limitation</strong></td>
-            <td>Overspray, empirical ink formulation</td>
-            <td>Micro‑scale only, limited materials</td>
-            <td>Single‑metal only, slow speed</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="compare-grid">
+        <div class="compare-card" style="border-top:3px solid var(--teal);">
+          <div class="header" style="color:var(--teal);">P1 · Wilkinson 2019</div>
+          <div class="row"><span class="key">Core Focus</span><span class="val">Review of AJP fundamentals</span></div>
+          <div class="row"><span class="key">Resolution</span><span class="val">~10 µm</span></div>
+          <div class="row"><span class="key">Dimension</span><span class="val">2D / 2.5D</span></div>
+          <div class="row"><span class="key">Materials</span><span class="val">Single‑material inks</span></div>
+          <div class="row"><span class="key">Driving Force</span><span class="val">Gas flow</span></div>
+          <div class="row"><span class="key">Key Limitation</span><span class="val">Overspray · Empirical ink</span></div>
+        </div>
+        <div class="compare-card" style="border-top:3px solid var(--amber);">
+          <div class="header" style="color:var(--amber);">P2 · Hwang 2024</div>
+          <div class="row"><span class="key">Core Focus</span><span class="val">Multi‑material blending</span></div>
+          <div class="row"><span class="key">Resolution</span><span class="val">Micro‑scale</span></div>
+          <div class="row"><span class="key">Dimension</span><span class="val">2D films + stacked 3D</span></div>
+          <div class="row"><span class="key">Materials</span><span class="val" class="highlight">Polymer + NP blends</span></div>
+          <div class="row"><span class="key">Driving Force</span><span class="val">Dual‑gas atomization</span></div>
+          <div class="row"><span class="key">Key Limitation</span><span class="val">Micro‑scale only</span></div>
+        </div>
+        <div class="compare-card" style="border-top:3px solid var(--rose);">
+          <div class="header" style="color:var(--rose);">P3 · Jung 2019</div>
+          <div class="row"><span class="key">Core Focus</span><span class="val">3D nano‑printing</span></div>
+          <div class="row"><span class="key">Resolution</span><span class="val" class="highlight">&lt; 100 nm</span></div>
+          <div class="row"><span class="key">Dimension</span><span class="val" class="highlight">True 3D</span></div>
+          <div class="row"><span class="key">Materials</span><span class="val">Single metals (Pd, Cu)</span></div>
+          <div class="row"><span class="key">Driving Force</span><span class="val" class="highlight">Electrostatic fields</span></div>
+          <div class="row"><span class="key">Key Limitation</span><span class="val">Single‑metal only</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- ================================================================ -->
-  <!-- SECTION 4: GAP -->
+  <!-- SECTION: GAP -->
   <!-- ================================================================ -->
-  <section id="gap" data-aos="fade-up">
+  <section id="gap">
     <div class="container">
-      <div class="section-label" style="color:var(--rose); border-color:rgba(244,63,94,0.3);">Section 04 · The gap</div>
-      <h2>Where Do They Connect?</h2>
-      <p class="text-muted" style="max-width:700px;">Each paper solves a specific piece of the puzzle. The gap is where they don't overlap.</p>
+      <div class="section-tag" style="color:var(--purple); border-color:rgba(167,139,250,0.2);">Section 03 · The missing link</div>
+      <h2>Where do they connect?</h2>
+      <p class="text-muted" style="max-width:700px;">Each paper solves a specific piece. The gap is where they don't overlap.</p>
 
-      <div style="background:var(--bg-card); padding:1.5rem 2rem; border-radius:12px; margin:1.5rem 0; border-left:3px solid var(--rose);">
-        <p style="color:var(--text-main); font-size:1.05rem; font-weight:400; line-height:1.6;">
-          <i class="fas fa-exclamation-triangle" style="color:var(--rose); margin-right:10px;"></i>
-          <strong class="text-rose">Current approaches remain fragmented:</strong>
+      <div class="gap-text">
+        <p style="color:#fff; font-size:1rem; font-weight:500;">
+          <i class="fas fa-exclamation-triangle" style="color:var(--purple); margin-right:10px;"></i>
+          <span style="color:var(--purple);">Current approaches remain fragmented:</span>
         </p>
-        <ul style="color:var(--text-muted); font-size:0.95rem; list-style:none; padding-left:1.5rem; margin-top:0.3rem;">
-          <li style="padding:0.2rem 0;"><span class="text-emerald">Hwang et al. (2024)</span> demonstrates multi‑material blending (AM3D) but is limited to <strong>micro‑scale</strong> 2.5D structures (&gt; 1 µm).</li>
-          <li style="padding:0.2rem 0;"><span class="text-amber">Jung et al. (2019)</span> achieves <strong>sub‑100 nm</strong> 3D nano‑structuring (IAAL) but strictly with <strong>single metals</strong> (Pd, Cu).</li>
-          <li style="padding:0.2rem 0; color:var(--text-main); font-weight:500;"><span class="text-rose">No single process</span> has unified dynamic in‑flight multi‑material blending with electrostatically guided vertical nano‑construction.</li>
+        <ul>
+          <li><span class="text-amber">Hwang et al. (2024)</span> demonstrates multi‑material blending (AM3D) but is limited to <strong>micro‑scale</strong> 2.5D structures (&gt; 1 µm).</li>
+          <li><span class="text-rose">Jung et al. (2019)</span> achieves <strong>sub‑100 nm</strong> 3D nano‑structuring (IAAL) but strictly with <strong>single metals</strong> (Pd, Cu).</li>
+          <li style="color:#fff; font-weight:500;"><span class="text-purple">No single process</span> has unified dynamic in‑flight multi‑material blending with electrostatically guided vertical nano‑construction.</li>
         </ul>
       </div>
 
-      <div class="diagram-container">
-        <h4 style="color:var(--rose);">Synthesis Matrix: The Missing Link</h4>
-        <div class="gap-map">
-          <div class="gap-node" style="border-color:var(--cyan);">
-            <div class="label">Paper 1</div>
-            <div class="title">Structural Flexibility</div>
-            <div class="desc">1‑5 mm stand‑off · Conformal</div>
-          </div>
-          <div style="font-size:1.8rem; color:var(--text-muted);">+</div>
-          <div class="gap-node" style="border-color:var(--emerald);">
-            <div class="label">Paper 2</div>
-            <div class="title">Homogeneous Blending</div>
-            <div class="desc">Mid‑air mixing · No agglomeration</div>
-          </div>
-          <div style="font-size:1.8rem; color:var(--text-muted);">+</div>
-          <div class="gap-node" style="border-color:var(--amber);">
-            <div class="label">Paper 3</div>
-            <div class="title">Atomic Precision</div>
-            <div class="desc">&lt; 100 nm · 3D architectures</div>
-          </div>
+      <div class="venn-wrapper">
+        <div class="venn-circle c1">
+          <div class="label">Paper 1</div>
+          <div class="title">Structural Flexibility</div>
+          <div class="desc">1‑5 mm stand‑off · Conformal</div>
         </div>
-        <div style="display:flex; justify-content:center; margin:1rem 0;">
-          <div class="gap-center">
-            <div class="big">The Gap<br><span style="font-size:0.7rem; font-weight:400; color:var(--text-muted);">No unified<br>multi‑material<br>+ 3D nano</span></div>
-          </div>
+        <div style="font-size:1.5rem; color:var(--text-dim);">+</div>
+        <div class="venn-circle c2">
+          <div class="label">Paper 2</div>
+          <div class="title">Homogeneous Blending</div>
+          <div class="desc">Mid‑air mixing · No agglomeration</div>
         </div>
-        <div class="diagram-caption">
-          <span class="text-cyan">P3</span> has nanoscale resolution but is single‑metal.
-          <span class="text-emerald">P2</span> has multi‑material capability but is microscale.
-          <strong class="text-rose">No integration exists.</strong>
+        <div style="font-size:1.5rem; color:var(--text-dim);">+</div>
+        <div class="venn-circle c3">
+          <div class="label">Paper 3</div>
+          <div class="title">Atomic Precision</div>
+          <div class="desc">&lt; 100 nm · 3D architectures</div>
+        </div>
+        <div style="font-size:1.5rem; color:var(--text-dim);">=</div>
+        <div class="venn-gap">
+          <div class="big">The Gap<br><span style="font-size:0.65rem; font-weight:400; color:var(--text-muted);">No unified<br>multi‑material<br>+ 3D nano</span></div>
         </div>
       </div>
+      <p class="text-muted" style="text-align:center; font-size:0.85rem;">
+        <span class="text-rose">P3</span> has nanoscale resolution but is single‑metal ·
+        <span class="text-amber">P2</span> has multi‑material capability but is microscale ·
+        <strong style="color:var(--purple);">No integration exists.</strong>
+      </p>
     </div>
   </section>
 
   <!-- ================================================================ -->
-  <!-- SECTION 5: RESEARCH QUESTION -->
+  <!-- SECTION: RESEARCH QUESTION -->
   <!-- ================================================================ -->
-  <section id="question" data-aos="fade-up">
+  <section id="question">
     <div class="container">
-      <div class="section-label" style="color:#c4b5fd; border-color:rgba(196,181,253,0.3);">Section 05 · The question we developed</div>
-      <h2>One question, built from the gaps</h2>
+      <div class="section-tag" style="color:#c4b5fd; border-color:rgba(196,181,253,0.2);">Section 04 · The next step</div>
+      <h2>One question. Built from the gaps.</h2>
       <p class="text-muted" style="max-width:700px;">This is not a question from the papers — it is one we formed after reading all three, by looking at what each one leaves unsolved.</p>
 
       <div class="question-box">
         <p class="q">
-          "Can the <span style="color:var(--emerald);">pneumatic/ultrasonic dual‑atomization mid‑air blending</span> strategy of Hwang et al. (AM3D) be integrated with the <span style="color:var(--amber);">ion‑induced electrostatic focusing lens</span> of Jung et al. (IAAL) to enable the single‑pass fabrication of <span style="color:var(--cyan);">compositionally graded, sub‑100 nm resolution 3D nano‑pillars and helices</span>?"
+          "Can the <span style="color:var(--amber);">pneumatic/ultrasonic dual‑atomization mid‑air blending</span> strategy of Hwang et al. (AM3D) be integrated with the <span style="color:var(--rose);">ion‑induced electrostatic focusing lens</span> of Jung et al. (IAAL) to enable the single‑pass fabrication of <span style="color:var(--teal);">compositionally graded, sub‑100 nm resolution 3D nano‑pillars and helices</span>?"
         </p>
       </div>
 
-      <div class="two-col" style="margin-top:1.5rem;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:1.5rem;">
         <div style="background:var(--bg-card); padding:1.5rem; border-radius:12px;">
-          <h4 style="color:var(--cyan);"><i class="fas fa-question-circle"></i> Why we ask it</h4>
-          <ul style="color:var(--text-muted); list-style:none; padding-left:0; font-size:0.95rem;">
-            <li style="padding:0.2rem 0;">✓ P3 proves <strong>sub‑100 nm 3D</strong> but only with single metals.</li>
-            <li style="padding:0.2rem 0;">✓ P2 proves <strong>perfect multi‑material</strong> mixing but at micro‑scale.</li>
-            <li style="padding:0.2rem 0;">✓ Each solves part of the problem — <strong>no one has joined all three.</strong></li>
+          <h4 style="color:var(--teal);"><i class="fas fa-question-circle"></i> Why we ask it</h4>
+          <ul style="color:var(--text-muted); list-style:none; padding-left:0; font-size:0.9rem;">
+            <li style="padding:0.2rem 0;">✓ P3 proves <strong style="color:#fff;">sub‑100 nm 3D</strong> but only with single metals.</li>
+            <li style="padding:0.2rem 0;">✓ P2 proves <strong style="color:#fff;">perfect multi‑material</strong> mixing but at micro‑scale.</li>
+            <li style="padding:0.2rem 0;">✓ Each solves part of the problem — <strong style="color:var(--purple);">no one has joined all three.</strong></li>
           </ul>
         </div>
         <div style="background:var(--bg-card); padding:1.5rem; border-radius:12px;">
-          <h4 style="color:var(--emerald);"><i class="fas fa-rocket"></i> Where this could go</h4>
-          <ul style="color:var(--text-muted); list-style:none; padding-left:0; font-size:0.95rem;">
-            <li style="padding:0.2rem 0;">✓ <strong>3D Nano‑electronics</strong> — multi‑material interconnects at the molecular scale.</li>
-            <li style="padding:0.2rem 0;">✓ <strong>Heterogeneous sensors</strong> — dielectric + conductor in one 3D nano‑architecture.</li>
-            <li style="padding:0.2rem 0;">✓ <strong>Metamaterials</strong> — optical/mechanical properties impossible with single materials.</li>
+          <h4 style="color:var(--amber);"><i class="fas fa-rocket"></i> Where this could go</h4>
+          <ul style="color:var(--text-muted); list-style:none; padding-left:0; font-size:0.9rem;">
+            <li style="padding:0.2rem 0;">✓ <strong style="color:#fff;">3D Nano‑electronics</strong> — multi‑material interconnects at the molecular scale.</li>
+            <li style="padding:0.2rem 0;">✓ <strong style="color:#fff;">Heterogeneous sensors</strong> — dielectric + conductor in one 3D nano‑architecture.</li>
+            <li style="padding:0.2rem 0;">✓ <strong style="color:#fff;">Metamaterials</strong> — optical/mechanical properties impossible with single materials.</li>
           </ul>
         </div>
       </div>
@@ -855,50 +776,53 @@
   </section>
 
   <!-- ================================================================ -->
-  <!-- SECTION 6: VERDICT -->
+  <!-- SECTION: VERDICT -->
   <!-- ================================================================ -->
-  <section id="verdict" data-aos="fade-up">
+  <section id="verdict">
     <div class="container">
-      <div class="section-label">Section 06 · Verdict through the 3‑level lens</div>
+      <div class="section-tag">Section 05 · Final verdict</div>
       <h2>Which paper wins — and at what depth</h2>
-      <p class="text-muted" style="max-width:700px;">Each paper wins something different. The cards below show how each one scores as you read deeper.</p>
+      <p class="text-muted" style="max-width:700px;">Each paper wins something different. The cards below show how each one scores.</p>
 
-      <div class="verdict-grid">
-        <div class="verdict-card" style="border-top:3px solid var(--cyan);">
-          <h4 style="color:var(--cyan);">Best Foundation</h4>
-          <p style="color:var(--text-muted); font-size:0.9rem;">P1 · Wilkinson &amp; Smith 2019</p>
-          <p style="color:var(--text-muted); font-size:0.85rem;">The cleanest overview of AJP mechanics — the paper you'd give to someone new to the field. Establishes the language and the limits.</p>
-          <div class="stars">★★★★☆</div>
-          <div style="color:var(--text-muted); font-size:0.75rem;">L1 ★★★★☆ · L2 ★★★☆☆ · L3 ★★☆☆☆</div>
+      <div class="radar-grid">
+        <div class="radar-card">
+          <div style="color:var(--teal); font-size:1.8rem;">📄</div>
+          <h4 style="color:var(--teal);">Best Foundation</h4>
+          <div class="label">P1 · Wilkinson &amp; Smith 2019</div>
+          <div class="desc">The cleanest overview of AJP mechanics — the paper you'd give to someone new to the field.</div>
+          <div class="score" style="color:var(--teal);">4/5</div>
+          <div class="bars"><div class="bar fill"></div><div class="bar fill"></div><div class="bar fill"></div><div class="bar fill"></div><div class="bar"></div></div>
         </div>
-        <div class="verdict-card" style="border-top:3px solid var(--emerald);">
-          <h4 style="color:var(--emerald);">Best Materials Innovation</h4>
-          <p style="color:var(--text-muted); font-size:0.9rem;">P2 · Hwang &amp; Choi 2024</p>
-          <p style="color:var(--text-muted); font-size:0.85rem;">Solves a 60‑year problem with elegant simplicity. The most rewarding paper to dig into at Level 3 — the chemistry and physics are beautifully connected.</p>
-          <div class="stars">★★★★☆</div>
-          <div style="color:var(--text-muted); font-size:0.75rem;">L1 ★★★☆☆ · L2 ★★★★☆ · L3 ★★★★☆</div>
+        <div class="radar-card b2">
+          <div style="color:var(--amber); font-size:1.8rem;">🧪</div>
+          <h4 style="color:var(--amber);">Best Materials Innovation</h4>
+          <div class="label">P2 · Hwang &amp; Choi 2024</div>
+          <div class="desc">Solves a 60‑year problem with elegant simplicity. The most rewarding paper to dig into.</div>
+          <div class="score" style="color:var(--amber);">4.5/5</div>
+          <div class="bars"><div class="bar fill"></div><div class="bar fill"></div><div class="bar fill"></div><div class="bar fill"></div><div class="bar fill" style="background:var(--amber);"></div></div>
         </div>
-        <div class="verdict-card" style="border-top:3px solid var(--amber);">
-          <h4 style="color:var(--amber);">Best Concept · Most Exciting</h4>
-          <p style="color:var(--text-muted); font-size:0.9rem;">P3 · Jung &amp; Choi 2019</p>
-          <p style="color:var(--text-muted); font-size:0.85rem;">The 3‑level strategy works best here. L1 gives the whole idea in one diagram, L2 backs it with clean numbers, and L3 adds detail without losing the thread.</p>
-          <div class="stars">★★★★★</div>
-          <div style="color:var(--text-muted); font-size:0.75rem;">L1 ★★★★★ · L2 ★★★★☆ · L3 ★★★☆☆</div>
+        <div class="radar-card b3">
+          <div style="color:var(--rose); font-size:1.8rem;">⚡</div>
+          <h4 style="color:var(--rose);">Best Concept · Most Exciting</h4>
+          <div class="label">P3 · Jung &amp; Choi 2019</div>
+          <div class="desc">The 3‑level strategy works best here. L1 gives the whole idea in one diagram.</div>
+          <div class="score" style="color:var(--rose);">5/5</div>
+          <div class="bars"><div class="bar fill"></div><div class="bar fill"></div><div class="bar fill"></div><div class="bar fill"></div><div class="bar fill" style="background:var(--rose);"></div></div>
         </div>
       </div>
 
       <div style="background:var(--bg-card); padding:1.5rem 2rem; border-radius:12px; margin-top:1.5rem; border-left:3px solid var(--amber);">
-        <p style="color:var(--text-main); font-size:1rem; font-weight:400; line-height:1.6;">
-          <strong style="color:var(--amber);">Our opinion — the honest answer:</strong>
+        <p style="color:#fff; font-size:1rem; font-weight:500;">
+          <strong style="color:var(--amber);">Our honest opinion:</strong>
         </p>
         <p style="color:var(--text-muted); font-size:0.95rem;">
-          If we had to pick the <strong>most impactful</strong> paper, it is <span class="text-amber">P2 — Hwang &amp; Choi 2024</span>. 
-          P1 and P3 prove beautiful ideas, but P2 solves a foundational materials problem that has limited the entire field for decades. 
-          That said, <span class="text-cyan">P3</span> is the most exciting concept — electrostatically guided 3D nano‑printing could define the next generation of additive manufacturing. 
-          And <span class="text-emerald">P1</span> is the foundation the others build on.
+          If we had to pick the <strong style="color:#fff;">most impactful</strong> paper, it is <span style="color:var(--amber); font-weight:600;">P2 — Hwang &amp; Choi 2024</span>.
+          P1 and P3 prove beautiful ideas, but P2 solves a foundational materials problem that has limited the entire field for decades.
+          That said, <span style="color:var(--rose); font-weight:600;">P3</span> is the most exciting concept — electrostatically guided 3D nano‑printing could define the next generation of additive manufacturing.
+          And <span style="color:var(--teal); font-weight:600;">P1</span> is the foundation the others build on.
         </p>
-        <p style="color:var(--text-muted); font-size:0.9rem; margin-top:0.5rem;">
-          Together they tell one story: <span class="text-emerald">P1 brings the mechanics</span>, <span class="text-cyan">P3 brings the nano‑resolution</span>, and <span class="text-amber">P2 shows how materials can be blended perfectly</span>.
+        <p style="color:var(--text-muted); font-size:0.85rem; margin-top:0.5rem;">
+          Together they tell one story: <span style="color:var(--teal);">P1 brings the mechanics</span>, <span style="color:var(--rose);">P3 brings the nano‑resolution</span>, and <span style="color:var(--amber);">P2 shows how materials can be blended perfectly</span>.
         </p>
       </div>
     </div>
@@ -909,7 +833,7 @@
   <!-- ================================================================ -->
   <footer>
     <p>Aerosol Nanotechnology · Three Papers · Final Presentation</p>
-    <p style="font-size:0.7rem; color:var(--text-muted);">Based on Wilkinson et al. (2019) · Hwang et al. (2024) · Jung et al. (2019)</p>
+    <p style="font-size:0.65rem; color:var(--text-dim);">Based on Wilkinson et al. (2019) · Hwang et al. (2024) · Jung et al. (2019)</p>
   </footer>
 
   <!-- ================================================================ -->
@@ -919,26 +843,46 @@
   </script>
   <script>
     // ===== AOS =====
-    AOS.init({ duration: 700, once: true, offset: 80, easing: 'ease-out' });
+    AOS.init({ duration: 600, once: true, offset: 60, easing: 'ease-out' });
 
     // ===== PROGRESS BAR =====
     window.addEventListener('scroll', function() {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       document.getElementById('progressBar').style.width = (scrollTop / docHeight * 100) + '%';
+
+      // Update sidebar active state
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('.sidebar a');
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 120;
+        if (scrollTop >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
     });
 
-    // ===== TOGGLE LEVELS =====
-    function toggleLevel(el) {
-      el.classList.toggle('open');
+    // ===== PAPER TABS =====
+    function switchPaper(num) {
+      document.querySelectorAll('.paper-tabs button').forEach(b => b.classList.remove('active'));
+      document.querySelector(`.paper-tabs button[data-paper="${num}"]`).classList.add('active');
+      document.querySelectorAll('.paper-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById(`panel-${num}`).classList.add('active');
     }
 
-    // ===== PARTICLES (Hero only) =====
+    // ===== PARTICLES =====
     (function() {
       const canvas = document.getElementById('particle-canvas');
       const ctx = canvas.getContext('2d');
       let width, height, particles = [];
-      const num = 60;
+      const num = 50;
 
       function resize() {
         const rect = canvas.parentElement.getBoundingClientRect();
@@ -951,10 +895,10 @@
         constructor() {
           this.x = Math.random() * width;
           this.y = Math.random() * height;
-          this.vx = (Math.random() - 0.5) * 0.2;
-          this.vy = (Math.random() - 0.5) * 0.2;
+          this.vx = (Math.random() - 0.5) * 0.15;
+          this.vy = (Math.random() - 0.5) * 0.15;
           this.r = Math.random() * 2 + 0.5;
-          this.o = Math.random() * 0.2 + 0.05;
+          this.o = Math.random() * 0.15 + 0.05;
         }
         update() {
           this.x += this.vx;
@@ -965,26 +909,19 @@
         draw() {
           ctx.beginPath();
           ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(6, 182, 212, ${this.o})`;
+          ctx.fillStyle = `rgba(45, 212, 191, ${this.o})`;
           ctx.fill();
         }
       }
 
-      function init() {
-        particles = Array.from({ length: num }, () => new Particle());
-      }
-
+      function init() { particles = Array.from({ length: num }, () => new Particle()); }
       function animate() {
         ctx.clearRect(0, 0, width, height);
-        particles.forEach(p => { p.update();
-          p.draw(); });
+        particles.forEach(p => { p.update(); p.draw(); });
         requestAnimationFrame(animate);
       }
-      resize();
-      init();
-      animate();
-      window.addEventListener('resize', () => { resize();
-        init(); });
+      resize(); init(); animate();
+      window.addEventListener('resize', () => { resize(); init(); });
     })();
   </script>
 
