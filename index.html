@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aerosol Jet Printing · 4‑Level Paper Analysis</title>
+  <title>Aerosol Jet Printing · 3‑Level Analysis</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -163,7 +163,7 @@
     }
 
     /* ================================================================
-       HERO
+       HERO WITH PARTICLE BACKGROUND
        ================================================================ */
     .hero {
       min-height: 100vh;
@@ -256,11 +256,11 @@
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
     /* ================================================================
-       4-LEVEL CARDS
+       3-LEVEL CARDS
        ================================================================ */
     .level-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 1.5rem;
       margin-top: 1.5rem;
     }
@@ -298,27 +298,24 @@
     }
     .level-card .level-desc {
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       line-height: 1.6;
     }
     .level-card .level-desc strong { color: #fff; }
     .level-card .level-desc ul { padding-left: 1.2rem; margin-top: 0.3rem; }
-    .level-card .level-desc ul li { color: var(--text-muted); font-size: 0.85rem; padding: 0.1rem 0; }
+    .level-card .level-desc ul li { color: var(--text-muted); font-size: 0.8rem; padding: 0.1rem 0; }
 
     .level-card.l1 { border-left: 3px solid var(--teal); }
     .level-card.l2 { border-left: 3px solid var(--amber); }
     .level-card.l3 { border-left: 3px solid var(--rose); }
-    .level-card.l4 { border-left: 3px solid var(--purple); }
 
     .level-card.l1 .badge { background: var(--teal-dim); color: var(--teal); }
     .level-card.l2 .badge { background: var(--amber-dim); color: var(--amber); }
     .level-card.l3 .badge { background: var(--rose-dim); color: var(--rose); }
-    .level-card.l4 .badge { background: var(--purple-dim); color: var(--purple); }
 
     .level-card.l1 .level-title { color: var(--teal); }
     .level-card.l2 .level-title { color: var(--amber); }
     .level-card.l3 .level-title { color: var(--rose); }
-    .level-card.l4 .level-title { color: var(--purple); }
 
     @media (max-width: 768px) { .level-grid { grid-template-columns: 1fr; } }
 
@@ -517,7 +514,7 @@
   </nav>
 
   <!-- ================================================================ -->
-  <!-- HERO -->
+  <!-- HERO WITH PARTICLES -->
   <!-- ================================================================ -->
   <section class="hero" id="intro">
     <canvas id="particle-canvas"></canvas>
@@ -537,13 +534,13 @@
   </section>
 
   <!-- ================================================================ -->
-  <!-- SECTION: PAPERS (TABS + 4-LEVEL) -->
+  <!-- SECTION: PAPERS (TABS + 3-LEVEL) -->
   <!-- ================================================================ -->
   <section id="papers">
     <div class="container">
       <div class="section-tag">Section 01 · The three papers</div>
-      <h2>4‑Level Analysis</h2>
-      <p class="text-muted" style="max-width:700px;">Each paper is analyzed at four depths. Click a tab to switch papers.</p>
+      <h2>3‑Level Analysis</h2>
+      <p class="text-muted" style="max-width:700px;">Each paper is analyzed at three depths. Click a tab to switch papers.</p>
 
       <div class="paper-tabs">
         <button class="active" data-paper="1" onclick="switchPaper(1)">📄 Paper 1 · Wilkinson</button>
@@ -596,8 +593,8 @@
             <div class="level-number"><span>L1</span> <span class="badge">Scan</span></div>
             <div class="level-title">What is the paper about?</div>
             <div class="level-desc">
-              <strong>Title:</strong> A review of aerosol jet printing — a non‑traditional hybrid process for micro‑manufacturing<br>
-              <strong>Abstract:</strong> AJP is a contactless direct‑write approach for fine features on many substrates. It enables freeform deposition with a 1‑5 mm stand‑off, wide material compatibility, and high resolution.<br>
+              <strong>Title:</strong> A review of aerosol jet printing — a non‑traditional hybrid process for micro‑manufacturing<br><br>
+              <strong>Abstract:</strong> AJP is a contactless direct‑write approach for fine features on many substrates. It enables freeform deposition with a 1‑5 mm stand‑off, wide material compatibility, and high resolution.<br><br>
               <strong>Key Figures:</strong> Fig.1 shows the AJP process (atomizer → carrier gas → focusing → deposition). Fig.6 shows the parameters affecting deposition.
             </div>
           </div>
@@ -607,41 +604,25 @@
             <div class="level-number"><span>L2</span> <span class="badge">Understand</span></div>
             <div class="level-title">What did they do &amp; find?</div>
             <div class="level-desc">
-              <strong>What they did:</strong> They reviewed the AJP literature, summarizing atomization techniques (ultrasonic vs pneumatic), focusing mechanisms (sheath gas), and applications.<br>
+              <strong>What they did:</strong> They reviewed the AJP literature, summarizing atomization techniques, focusing mechanisms, and applications.<br><br>
               <strong>What they found:</strong>
               <ul>
-                <li>Two atomization routes: <strong>Ultrasonic</strong> (1‑10 cP, monodisperse) and <strong>Pneumatic</strong> (1‑1000 cP, requires Virtual Impactor)</li>
+                <li>Two atomization routes: <strong>Ultrasonic</strong> (1‑10 cP) and <strong>Pneumatic</strong> (1‑1000 cP, requires Virtual Impactor)</li>
                 <li>Sheath gas enables <strong>1‑5 mm stand‑off</strong> → conformal printing</li>
                 <li>Finest lines: <strong>~10 µm</strong> (Cai et al.)</li>
                 <li>Materials: silver, ceramics, SU‑8, proteins, DNA</li>
+                <li>Key challenges: <strong>overspray</strong>, empirical ink formulation</li>
               </ul>
             </div>
           </div>
 
-          <!-- Level 3: Deep Dive -->
+          <!-- Level 3: Deep Dive + Contribution -->
           <div class="level-card l3">
             <div class="level-number"><span>L3</span> <span class="badge">Deep Dive</span></div>
-            <div class="level-title">How did they do it? (Methods)</div>
+            <div class="level-title">How &amp; why does it matter?</div>
             <div class="level-desc">
-              <strong>Methodology:</strong> Literature review of AJP research from 2001‑2018. Organised by:
-              <ul>
-                <li><strong>Atomization:</strong> Ultrasonic (piezoelectric transducer, 2‑5 µm droplets) vs Pneumatic (Collison‑style, polydisperse, Virtual Impactor for size selection)</li>
-                <li><strong>Focusing:</strong> Sheath gas constricts aerosol stream → 1‑5 mm stand‑off</li>
-                <li><strong>Materials:</strong> Ink formulation requirements (viscosity, particle size, solvent volatility)</li>
-                <li><strong>Applications:</strong> Passive/active components, sensors, 3D structures, biology</li>
-              </ul>
-              <strong>Key challenge identified:</strong> No universal "Z‑number" for ink formulation (unlike inkjet), making development empirical.
-            </div>
-          </div>
-
-          <!-- Level 4: Contribution -->
-          <div class="level-card l4">
-            <div class="level-number"><span>L4</span> <span class="badge">Contribution</span></div>
-            <div class="level-title">What is shown? Message &amp; Contribution</div>
-            <div class="level-desc">
-              <strong>What is shown:</strong> AJP is a versatile, non‑contact printing method that works on curved surfaces with a wide range of materials. But it has limitations: overspray, empirical ink formulation, and resolution limited to ~10 µm.<br><br>
-              <strong>Message:</strong> AJP is a powerful assistive manufacturing technology, but it needs better process models, standardized ink formulations, and higher resolution for wider adoption.<br><br>
-              <strong>Contribution to our research question:</strong> This paper establishes the <strong>baseline for AJP mechanics</strong>. It shows the limitations (overspray, ink formulation, ~10 µm resolution) that later papers address (P2 solves ink mixing, P3 improves resolution).
+              <strong>How they did it:</strong> Literature review of AJP research from 2001‑2018. Organised by: atomization (ultrasonic vs pneumatic), focusing (sheath gas), materials (ink formulation), and applications.<br><br>
+              <strong>What it contributes:</strong> This paper establishes the <strong>baseline for AJP mechanics</strong>. It shows the limitations — overspray, empirical ink formulation, ~10 µm resolution — that later papers address. <span style="color:var(--teal);">P2 solves ink mixing, P3 improves resolution.</span>
             </div>
           </div>
         </div>
@@ -690,8 +671,8 @@
             <div class="level-number"><span>L1</span> <span class="badge">Scan</span></div>
             <div class="level-title">What is the paper about?</div>
             <div class="level-desc">
-              <strong>Title:</strong> Highly dispersed nanomaterials in polymer matrix via aerosol‑jet‑based multi‑material 3D printing<br>
-              <strong>Abstract:</strong> A novel AM3D printing method that achieves highly dispersed nanomaterials in a polymer matrix by atomizing polymer and nanoparticles separately, combining them only at the printhead.<br>
+              <strong>Title:</strong> Highly dispersed nanomaterials in polymer matrix via aerosol‑jet‑based multi‑material 3D printing<br><br>
+              <strong>Abstract:</strong> A novel AM3D printing method that achieves highly dispersed nanomaterials in a polymer matrix by atomizing polymer and nanoparticles separately, combining them only at the printhead.<br><br>
               <strong>Key Figures:</strong> Fig.1 shows the graffiti‑inspired process. Fig.2 shows SEM images of perfect dispersion. Fig.4 shows multi‑layer dielectric performance.
             </div>
           </div>
@@ -701,42 +682,25 @@
             <div class="level-number"><span>L2</span> <span class="badge">Understand</span></div>
             <div class="level-title">What did they do &amp; find?</div>
             <div class="level-desc">
-              <strong>What they did:</strong> They fabricated PI/Ag and PVDF‑TrFE/Ag nanocomposites using AM3D printing with separate atomization of polymer and nanoparticles.<br>
+              <strong>What they did:</strong> They fabricated PI/Ag and PVDF‑TrFE/Ag nanocomposites using AM3D printing with separate atomization of polymer and nanoparticles.<br><br>
               <strong>What they found:</strong>
               <ul>
                 <li><strong>Zero agglomeration</strong> — SEM shows perfect dispersion</li>
                 <li>Dielectric constant (ε′): pure PVDF‑TrFE = 14 → nanocomposite = <strong>28</strong> (2×)</li>
                 <li>Multi‑layer structures achieved <strong>16×</strong> higher ε′</li>
                 <li>TENG output: 80V → ~90V</li>
-                <li>Numerical simulation (Euler‑Lagrangian) identified <strong>114°</strong> junction angle as optimal</li>
+                <li>Numerical simulation identified <strong>114°</strong> junction angle as optimal</li>
               </ul>
             </div>
           </div>
 
-          <!-- Level 3: Deep Dive -->
+          <!-- Level 3: Deep Dive + Contribution -->
           <div class="level-card l3">
             <div class="level-number"><span>L3</span> <span class="badge">Deep Dive</span></div>
-            <div class="level-title">How did they do it? (Methods)</div>
+            <div class="level-title">How &amp; why does it matter?</div>
             <div class="level-desc">
-              <strong>Methodology:</strong>
-              <ul>
-                <li><strong>Atomization:</strong> Pneumatic atomizer (PA) for polymer solution + Ultrasonic atomizer (UA) for Ag nanoparticle suspension</li>
-                <li><strong>Mixing:</strong> Separate aerosol streams combined at <strong>114° Y‑junction</strong> printhead</li>
-                <li><strong>Numerical simulation:</strong> Euler‑Lagrangian framework for particle‑laden flows</li>
-                <li><strong>Characterization:</strong> SEM (dispersion), XRD (composition), dielectric spectroscopy (ε′), TENG (energy harvesting)</li>
-                <li><strong>Materials:</strong> PI and PVDF‑TrFE polymers + ~100 nm Ag nanoparticles</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Level 4: Contribution -->
-          <div class="level-card l4">
-            <div class="level-number"><span>L4</span> <span class="badge">Contribution</span></div>
-            <div class="level-title">What is shown? Message &amp; Contribution</div>
-            <div class="level-desc">
-              <strong>What is shown:</strong> AM3D printing eliminates nanoparticle agglomeration — a problem that has limited nanocomposites for 60 years. The technique works by atomizing polymer and nanoparticles separately and blending them only at the printhead.<br><br>
-              <strong>Message:</strong> The problem isn't the materials — it's the mixing process. By separating atomization, you can achieve perfect dispersion and dramatically improve electrical properties.<br><br>
-              <strong>Contribution to our research question:</strong> This paper provides the <strong>multi‑material blending strategy</strong> that we propose to combine with P3's electrostatic focusing. It proves that perfect dispersion is possible, but only at the micro‑scale — setting up the need for 3D nano‑structuring.
+              <strong>How they did it:</strong> Pneumatic atomizer (PA) for polymer + Ultrasonic atomizer (UA) for Ag nanoparticles → separate streams combined at <strong>114° Y‑junction</strong> → deposited as nanocomposite. Characterized by SEM, XRD, dielectric spectroscopy, and TENG.<br><br>
+              <strong>What it contributes:</strong> This paper solves the <strong>60‑year dispersion problem</strong>. It proves that the problem isn't the materials — it's the mixing process. <span style="color:var(--amber);">It provides the multi‑material blending strategy</span> that we propose to combine with P3's electrostatic focusing.
             </div>
           </div>
         </div>
@@ -795,8 +759,8 @@
             <div class="level-number"><span>L1</span> <span class="badge">Scan</span></div>
             <div class="level-title">What is the paper about?</div>
             <div class="level-desc">
-              <strong>Title:</strong> Three‑dimensional nanoprinting via charged aerosol focusing<br>
-              <strong>Abstract:</strong> A novel 3D nano‑printing concept using a floating dielectric mask and electrostatic field to focus charged aerosols. Two regimes exist: growth mode and writing mode.<br>
+              <strong>Title:</strong> Three‑dimensional nanoprinting via charged aerosol focusing<br><br>
+              <strong>Abstract:</strong> A novel 3D nano‑printing concept using a floating dielectric mask and electrostatic field to focus charged aerosols. Two regimes exist: growth mode and writing mode.<br><br>
               <strong>Key Figures:</strong> Fig.1 shows the mask + electrostatic focusing. Fig.2 shows growth vs writing modes. Fig.3 shows helix structures. Fig.4 shows writing of letters "3D".
             </div>
           </div>
@@ -806,7 +770,7 @@
             <div class="level-number"><span>L2</span> <span class="badge">Understand</span></div>
             <div class="level-title">What did they do &amp; find?</div>
             <div class="level-desc">
-              <strong>What they did:</strong> They developed Ion‑Assisted Aerosol Lithography (IAAL) — using a floating SiNₓ mask with ions creating electrostatic funnels to guide charged nanoparticles into 3D structures.<br>
+              <strong>What they did:</strong> They developed Ion‑Assisted Aerosol Lithography (IAAL) — using a floating SiNₓ mask with ions creating electrostatic funnels to guide charged nanoparticles into 3D structures.<br><br>
               <strong>What they found:</strong>
               <ul>
                 <li><strong>Two modes:</strong> Growth mode (slow stage → pillars, helices) and Writing mode (fast stage → brush‑like deposition)</li>
@@ -818,31 +782,13 @@
             </div>
           </div>
 
-          <!-- Level 3: Deep Dive -->
+          <!-- Level 3: Deep Dive + Contribution -->
           <div class="level-card l3">
             <div class="level-number"><span>L3</span> <span class="badge">Deep Dive</span></div>
-            <div class="level-title">How did they do it? (Methods)</div>
+            <div class="level-title">How &amp; why does it matter?</div>
             <div class="level-desc">
-              <strong>Methodology:</strong>
-              <ul>
-                <li><strong>Nanoparticle generation:</strong> Spark discharge generator creates charged nanoparticles (Pd, Cu, ~50 nm)</li>
-                <li><strong>Mask:</strong> Floating dielectric mask (SiNₓ) with 4 µm holes</li>
-                <li><strong>Electrostatic focusing:</strong> Positive ions accumulate on mask → create charged cushion → electric field funnels nanoparticles through holes</li>
-                <li><strong>Stage control:</strong> Piezoelectric nanostage with 3D translation (growth rate ~50 µm/h)</li>
-                <li><strong>Characterization:</strong> FE‑SEM, EDS for composition, KFM for surface potential</li>
-                <li><strong>Theoretical model:</strong> "Persistence length" (Lp) derived from electric field flux conservation</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Level 4: Contribution -->
-          <div class="level-card l4">
-            <div class="level-number"><span>L4</span> <span class="badge">Contribution</span></div>
-            <div class="level-title">What is shown? Message &amp; Contribution</div>
-            <div class="level-desc">
-              <strong>What is shown:</strong> IAAL enables true 3D nano‑printing with sub‑100 nm resolution using electrostatic fields instead of physical nozzles. Complex shapes like helices and zig‑zags are possible.<br><br>
-              <strong>Message:</strong> Aerosol‑based printing can achieve nanoscale resolution and true 3D geometries by replacing physical confinement with electrostatic guiding.<br><br>
-              <strong>Contribution to our research question:</strong> This paper provides the <strong>electrostatic focusing method</strong> that we propose to combine with P2's multi‑material blending. It proves that sub‑100 nm 3D is possible, but only with single metals — setting up the need for multi‑material integration.
+              <strong>How they did it:</strong> Spark discharge generates charged nanoparticles (Pd, Cu, ~50 nm) → ions accumulate on SiNₓ mask (4 µm holes) → electric field funnels particles through holes → 3D stage controls growth (rate ~50 µm/h). Characterized by FE‑SEM, EDS, KFM.<br><br>
+              <strong>What it contributes:</strong> This paper proves that <strong>true 3D nano‑printing is possible</strong> using electrostatic fields instead of physical nozzles. <span style="color:var(--rose);">It provides the electrostatic focusing method</span> that we propose to combine with P2's multi‑material blending.
             </div>
           </div>
         </div>
@@ -1038,7 +984,7 @@
   <!-- FOOTER -->
   <!-- ================================================================ -->
   <footer>
-    <p>Aerosol Nanotechnology · Three Papers · 4‑Level Analysis</p>
+    <p>Aerosol Nanotechnology · Three Papers · 3‑Level Analysis</p>
     <p style="font-size:0.65rem; color:var(--text-dim);">Based on Wilkinson et al. (2019) · Hwang et al. (2024) · Jung et al. (2019)</p>
   </footer>
 
@@ -1083,7 +1029,7 @@
       const canvas = document.getElementById('particle-canvas');
       const ctx = canvas.getContext('2d');
       let width, height, particles = [];
-      const num = 50;
+      const num = 60;
 
       function resize() {
         const rect = canvas.parentElement.getBoundingClientRect();
@@ -1096,10 +1042,10 @@
         constructor() {
           this.x = Math.random() * width;
           this.y = Math.random() * height;
-          this.vx = (Math.random() - 0.5) * 0.15;
-          this.vy = (Math.random() - 0.5) * 0.15;
+          this.vx = (Math.random() - 0.5) * 0.2;
+          this.vy = (Math.random() - 0.5) * 0.2;
           this.r = Math.random() * 2 + 0.5;
-          this.o = Math.random() * 0.15 + 0.05;
+          this.o = Math.random() * 0.2 + 0.05;
         }
         update() {
           this.x += this.vx;
@@ -1121,7 +1067,9 @@
         particles.forEach(p => { p.update(); p.draw(); });
         requestAnimationFrame(animate);
       }
-      resize(); init(); animate();
+      resize();
+      init();
+      animate();
       window.addEventListener('resize', () => { resize(); init(); });
     })();
   </script>
